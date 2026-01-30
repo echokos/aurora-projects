@@ -16,6 +16,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=DM+Sans:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700&family=Manrope:wght@300;400;500;600;700&family=Caveat:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
   <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
   
   <style>
@@ -58,6 +59,20 @@
     .kanban-column {
       min-height: 200px;
     }
+    
+    /* Drag-and-drop styles */
+    .sortable-ghost {
+      opacity: 0.4;
+    }
+    
+    .sortable-drag {
+      opacity: 1;
+      cursor: grabbing !important;
+    }
+    
+    .sortable-chosen {
+      cursor: grab;
+    }
   </style>
 </head>
 <body class="min-h-screen bg-base-200 font-jakarta" x-data="kanban()" x-cloak>
@@ -96,11 +111,12 @@
           Backlog
           <span class="badge badge-sm badge-ghost ml-2" x-text="getProjectsByStatus('backlog').length"></span>
         </h2>
-        <div class="space-y-3">
+        <div class="space-y-3" x-ref="backlog">
           <template x-for="project in getProjectsByStatus('backlog')" :key="project.id">
             <div 
               @click="openProject(project)"
-              class="card bg-base-100 shadow-sm border border-base-300 hover:border-primary/50 cursor-pointer transition-all hover:shadow-md"
+              :data-id="project.id"
+              class="card bg-base-100 shadow-sm border border-base-300 hover:border-primary/50 cursor-grab transition-all hover:shadow-md"
             >
               <div class="card-body p-4">
                 <h3 class="font-semibold text-sm leading-tight" x-text="project.title"></h3>
@@ -128,11 +144,12 @@
           Up Next
           <span class="badge badge-sm badge-ghost ml-2" x-text="getProjectsByStatus('up-next').length"></span>
         </h2>
-        <div class="space-y-3">
+        <div class="space-y-3" x-ref="upnext">
           <template x-for="project in getProjectsByStatus('up-next')" :key="project.id">
             <div 
               @click="openProject(project)"
-              class="card bg-base-100 shadow-sm border border-base-300 hover:border-primary/50 cursor-pointer transition-all hover:shadow-md"
+              :data-id="project.id"
+              class="card bg-base-100 shadow-sm border border-base-300 hover:border-primary/50 cursor-grab transition-all hover:shadow-md"
             >
               <div class="card-body p-4">
                 <h3 class="font-semibold text-sm leading-tight" x-text="project.title"></h3>
@@ -160,11 +177,12 @@
           In Progress
           <span class="badge badge-sm badge-primary ml-2" x-text="getProjectsByStatus('in-progress').length"></span>
         </h2>
-        <div class="space-y-3">
+        <div class="space-y-3" x-ref="inprogress">
           <template x-for="project in getProjectsByStatus('in-progress')" :key="project.id">
             <div 
               @click="openProject(project)"
-              class="card bg-base-100 shadow-sm border border-primary/30 hover:border-primary cursor-pointer transition-all hover:shadow-md"
+              :data-id="project.id"
+              class="card bg-base-100 shadow-sm border border-primary/30 hover:border-primary cursor-grab transition-all hover:shadow-md"
             >
               <div class="card-body p-4">
                 <h3 class="font-semibold text-sm leading-tight" x-text="project.title"></h3>
@@ -190,11 +208,12 @@
           Done
           <span class="badge badge-sm badge-success ml-2" x-text="getProjectsByStatus('done').length"></span>
         </h2>
-        <div class="space-y-3">
+        <div class="space-y-3" x-ref="done">
           <template x-for="project in getProjectsByStatus('done')" :key="project.id">
             <div 
               @click="openProject(project)"
-              class="card bg-base-100 shadow-sm border border-success/20 hover:border-success/50 cursor-pointer transition-all hover:shadow-md opacity-60 hover:opacity-100"
+              :data-id="project.id"
+              class="card bg-base-100 shadow-sm border border-success/20 hover:border-success/50 cursor-grab transition-all hover:shadow-md opacity-60 hover:opacity-100"
             >
               <div class="card-body p-4">
                 <h3 class="font-semibold text-sm leading-tight" x-text="project.title"></h3>
@@ -287,6 +306,79 @@
         async init() {
           document.documentElement.setAttribute('data-theme', this.theme);
           await this.loadProjects();
+          this.initSortable();
+        },
+        
+        initSortable() {
+          const columns = ['backlog', 'upnext', 'inprogress', 'done'];
+          const statusMap = {
+            'backlog': 'backlog',
+            'upnext': 'up-next',
+            'inprogress': 'in-progress',
+            'done': 'done'
+          };
+          
+          columns.forEach(col => {
+            if (!this.$refs[col]) return;
+            
+            new Sortable(this.$refs[col], {
+              group: 'kanban',
+              animation: 150,
+              ghostClass: 'sortable-ghost',
+              chosenClass: 'sortable-chosen',
+              dragClass: 'sortable-drag',
+              filter: '.text-center', // Don't drag empty state messages
+              onEnd: (evt) => {
+                // Get the project ID from data-id attribute
+                const projectId = evt.item.dataset.id;
+                if (!projectId) return;
+                
+                // Determine new status from target column
+                const newStatus = statusMap[evt.to.parentElement.getAttribute('x-ref')] || 
+                                  statusMap[Object.keys(this.$refs).find(key => this.$refs[key] === evt.to)];
+                
+                // Find the project
+                const project = this.projects.find(p => p.id === projectId);
+                if (!project) return;
+                
+                // Update status if changed columns
+                if (project.status !== newStatus && newStatus) {
+                  project.status = newStatus;
+                }
+                
+                // Update priority based on new position in column
+                const newIndex = evt.newIndex;
+                const projectsInColumn = this.getProjectsByStatus(project.status);
+                projectsInColumn.forEach((p, idx) => {
+                  if (p.id === projectId) {
+                    p.priority = newIndex + 1;
+                  } else if (idx >= newIndex) {
+                    p.priority = idx + 2;
+                  } else {
+                    p.priority = idx + 1;
+                  }
+                });
+                
+                // Update lastUpdated
+                project.lastUpdated = new Date().toISOString().split('T')[0];
+                
+                // Save changes
+                this.saveProjects();
+              }
+            });
+          });
+        },
+        
+        async saveProjects() {
+          // In a real app, this would POST to an API
+          // For now, just log the updated data
+          console.log('Projects updated:', {
+            projects: this.projects
+          });
+          
+          // You could implement an API endpoint to save this
+          // For MVP, changes are client-side only until manual update
+          alert('Project moved! Note: Auto-save not yet implemented - Aurora will commit changes manually.');
         },
         
         async loadProjects() {
