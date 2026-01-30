@@ -1,18 +1,40 @@
 {
   "projects": [
     {
+      "id": "vt-chat-monitor",
+      "title": "VT Chat Monitor (MES Translator)",
+      "status": "done",
+      "priority": 1,
+      "summary": "Monitor VT Substack chat and translate signals into MES futures trades",
+      "details": "**Status:** ✅ FIXED AND WORKING (2026-01-30)\n\n**What it does:**\n- Monitors VT Substack chat every 5 minutes\n- Detects new threads/messages from Harry\n- Will translate trading signals to MES trades\n- Sends actionable alerts\n\n**Fix completed:**\n- Session capture was broken (captured paywall, not authenticated session)\n- Fixed login script to wait for actual chat content\n- Updated monitor to click into VT chat (was on chat list page)\n- Now successfully detecting all threads\n\n**Files:**\n- ~/clawd/integrations/vt-chat-monitor/\n- Service: systemd user service (vt-chat-monitor)\n- Running every 5 minutes\n\n**Next:** Add ntfy/Telegram notifications for new signals",
+      "lastUpdated": "2026-01-30"
+    },
+    {
+      "id": "model-configuration",
+      "title": "Model Configuration Fix",
+      "status": "done",
+      "priority": 1,
+      "summary": "Fixed Haiku being used for conversations - Sonnet now primary",
+      "details": "**Issue:** Haiku was set as primary model, causing poor reasoning on complex problems like the VT Chat Monitor debugging.\n\n**Fixed:**\n- Changed primary model to Sonnet (anthropic/claude-sonnet-4-5)\n- Moved Haiku to fallback list only\n- Created model-usage-guidelines.md with clear rules\n- Added guidelines to AGENTS.md session startup\n\n**Model hierarchy:**\n- Opus: Complex debugging, strategy, critical decisions\n- Sonnet: All conversations, general work (PRIMARY)\n- Haiku: Simple scraping only, fallback only\n\n**Documentation:** ~/clawd/docs/model-usage-guidelines.md",
+      "lastUpdated": "2026-01-30"
+    },
+    {
       "id": "proactive-employee",
       "title": "Proactive Employee System: Strategic Value Creation",
       "status": "in-progress",
-      "priority": 1,
+      "priority": 2,
       "summary": "Develop autonomous capability to create strategic value through self-improvement and independent problem-solving",
-      "details": "**Strategic Focus:**\n- Transform from task completion to value creation\n- Develop independent learning and innovation capabilities\n- Create substantive improvements to existing systems\n- Demonstrate strategic thinking and autonomous decision-making",
-      "lastUpdated": "2026-01-30",
-      "keyUpdates": [
-        "Rewrote master prompt to emphasize strategic WHY",
-        "Expanded philosophical framework for autonomous work",
-        "Clarified decision-making principles"
-      ]
+      "details": "**Strategic Focus:**\n- Transform from task completion to value creation\n- Develop independent learning and innovation capabilities\n- Create substantive improvements to existing systems\n- Demonstrate strategic thinking and autonomous decision-making\n\n**Current Status:**\n- ✅ Sub-agents working with Sonnet model\n- ✅ Master prompt emphasizing WHY\n- ✅ Morning briefings tested\n- ✅ Kanban board maintenance integrated\n- ⏳ Need to expand overnight autonomous work\n\n**Recent work:**\n- Fixed model configuration (was using Haiku incorrectly)\n- Completed VT Chat Monitor fix overnight\n\n**Next:** Continue expanding autonomous capabilities",
+      "lastUpdated": "2026-01-30"
+    },
+    {
+      "id": "jmp-phone-system",
+      "title": "JMP Phone System",
+      "status": "backlog",
+      "priority": 3,
+      "summary": "Real phone number for Aurora via JMP.chat (XMPP/SIP)",
+      "details": "**Status:** BLOCKED on payment\n\n**Infrastructure Complete:**\n- ✅ XMPP server running (xmpp.kos.plus)\n- ✅ Number selected: (608) 352-6060\n- ✅ Account created: aurora@xmpp.kos.plus\n- ❌ Payment failing (multiple cards rejected)\n- ⏳ Support ticket sent, awaiting response\n\n**Alternative:**\n- Current Twilio number works: +1 (608) 602-3002\n- Has limitations (latency, privacy)\n\n**Documentation:** ~/clawd/integrations/jmp/JMP-PHONE-SYSTEM.md",
+      "lastUpdated": "2026-01-30"
     }
   ]
 }
