@@ -1,40 +1,121 @@
 {
   "projects": [
     {
+      "id": "proactive-employee",
+      "title": "Proactive Employee System",
+      "status": "in-progress",
+      "priority": 1,
+      "summary": "Transform Aurora into 24/7 autonomous employee that completes work overnight",
+      "details": "**Goal:** Wake up to completed work, not a blank slate\n\n**Current Status:**\n- ✅ Sub-agents working with Sonnet model (fixed from Haiku)\n- ✅ Master prompt APPROVED and installed in AGENTS.md\n- ✅ Plan documented (~/clawd/docs/proactive-employee-plan.md)\n- ✅ Kanban board management integrated\n- ✅ Testing overnight autonomous workflows\n- ✅ Model usage guidelines created and added to session startup\n- ⏳ Morning briefing cron (6am variable, 7 variants) - needs deployment\n- ⏳ Heartbeat checks for email/calendar/tasks\n\n**Components:**\n- Morning briefing (6am variable cron)\n- Email/calendar/task scanning via heartbeat\n- Trade signal monitoring (VT, Spartus)\n- Dashboard updates (daily note generation)\n- Receipt filing automation\n- Kanban board maintenance (update live during conversations)\n\n**Recent work (2026-01-30):**\n- Fixed VT Chat Monitor (session + scraping issues)\n- Fixed model configuration (Sonnet now primary)\n- Added model-usage-guidelines.md to session startup\n\n**Waiting on:**\n- Directus API access for trade analysis\n\n**Next Steps:**\n- Continue expanding autonomous capabilities\n- Deploy morning brief cron\n- Document overnight workflow patterns",
+      "lastUpdated": "2026-01-30"
+    },
+    {
+      "id": "vt-fidelity-automation",
+      "title": "VT Swing → Fidelity Automation",
+      "status": "up-next",
+      "priority": 1,
+      "summary": "Automate VT swing signal execution across Fidelity accounts",
+      "details": "**Goal:** Eliminate manual trade execution for VT signals in Fidelity\n\n**Current State:**\n- ✅ VT signal monitoring working (vt-signal-monitor.js)\n- ✅ Email parsing and notifications functional\n- ✅ Dashboard tracking in Google Sheets\n- ✅ **Fidelity browser automation research complete** (Playwright working)\n- ⏳ Manual execution across 5 Fidelity accounts + Alerus 401k\n\n**Research Findings:**\n- Playwright + real Chrome works on elliott-nuc\n- Can access Fidelity login page and detect form fields\n- Documented in ~/clawd/integrations/fidelity-research/FINDINGS.md\n\n**Automation Target:**\n- Fidelity accounts (5 total) - browser automation via Playwright\n- Alerus 401k may stay manual (harder to automate)\n\n**Next Steps:**\n1. Build Fidelity login flow (2FA handling)\n2. Implement trade execution (buy/sell ETFs)\n3. Add position verification\n4. Test on paper account first\n5. Deploy to production with safety limits\n\n**Success Criteria:**\n- VT LONG signal → automatic buys across accounts\n- VT FLAT signal → automatic sells across accounts\n- Confirmation notifications after execution\n- Error handling + rollback on failures",
+      "lastUpdated": "2026-01-29"
+    },
+    {
       "id": "vt-chat-monitor",
       "title": "VT Chat Monitor (MES Translator)",
       "status": "done",
       "priority": 1,
       "summary": "Monitor VT Substack chat and translate signals into MES futures trades",
-      "details": "**Status:** ✅ FIXED AND WORKING (2026-01-30)\n\n**What it does:**\n- Monitors VT Substack chat every 5 minutes\n- Detects new threads/messages from Harry\n- Will translate trading signals to MES trades\n- Sends actionable alerts\n\n**Fix completed:**\n- Session capture was broken (captured paywall, not authenticated session)\n- Fixed login script to wait for actual chat content\n- Updated monitor to click into VT chat (was on chat list page)\n- Now successfully detecting all threads\n\n**Files:**\n- ~/clawd/integrations/vt-chat-monitor/\n- Service: systemd user service (vt-chat-monitor)\n- Running every 5 minutes\n\n**Next:** Add ntfy/Telegram notifications for new signals",
+      "details": "**Status:** ✅ FIXED AND WORKING (2026-01-30)\n\n**What happened:**\n- Session capture was broken (captured paywall, not authenticated)\n- Script was looking at chat list page, not inside the chat\n- Used Opus to debug properly after switching from Haiku\n- Fixed login-capture.js to wait for actual chat content\n- Updated monitor to click into VT chat first\n- Now successfully detecting all threads\n\n**What it does:**\n- Monitors VT Substack chat every 5 minutes\n- Detects Harry's intraday trading signals\n- Will translate to MES futures trades with entry/stop/target\n- Sends actionable alerts\n- Runs as systemd service\n\n**Translation Logic:**\n- **Sell puts** → LONG MES (bullish)\n- **Sell calls** → SHORT MES (bearish)\n- **Buy signals** → LONG MES\n- **No ticker** → Assume SPY/ES\n- **Elliott's constraint:** 20-22 point hard stop\n- **Position sizing:** 1x for 0DTE, 2x for swing\n- **Target:** 1.5:1 risk/reward (33 points for 22-point stop)\n\n**Files:**\n- ~/clawd/integrations/vt-chat-monitor/\n- Service: systemd user service (vt-chat-monitor)\n- Running every 5 minutes\n\n**Next:** Add ntfy/Telegram notifications for new signals",
       "lastUpdated": "2026-01-30"
     },
     {
-      "id": "model-configuration",
+      "id": "vt-swing-monitoring",
+      "title": "VT Swing Signal Monitoring (Email)",
+      "status": "done",
+      "priority": 1,
+      "summary": "Monitor VT email for swing signals (LONG/FLAT), alert Elliott",
+      "details": "**Status:** ✅ COMPLETE AND PRODUCTION\n\n**What it does:**\n- Monitors Harry Dunn's Substack emails for VT swing signals\n- Parses signal changes (LONG/FLAT for SPY, QQQ, IWM, etc.)\n- Updates Google Sheets dashboard\n- Sends urgent alerts via ntfy + Telegram\n- Elliott executes trades manually in Fidelity + Alerus\n\n**Documentation:** ~/clawd/projects/volatility-therapy-swing.md\n\n**Key Files:**\n- vt-signal-monitor.js (signal parser)\n- Email monitoring via Gmail API\n- Dashboard: Google Sheets tracking\n\n**Signal Flow:**\nHarry's Email → Gmail → vt-signal-monitor.js → Parse → Notify → Manual Execution\n\n**Difference from VT Chat Monitor:**\n- This = swing positions (days/weeks holding)\n- Chat monitor = intraday MES trades (0DTE or same-day)\n\n**Next Evolution:** Automate Fidelity execution (see \"VT → Fidelity Automation\" project)",
+      "lastUpdated": "2026-01-29"
+    },
+    {
+      "id": "model-configuration-fix",
       "title": "Model Configuration Fix",
       "status": "done",
       "priority": 1,
       "summary": "Fixed Haiku being used for conversations - Sonnet now primary",
-      "details": "**Issue:** Haiku was set as primary model, causing poor reasoning on complex problems like the VT Chat Monitor debugging.\n\n**Fixed:**\n- Changed primary model to Sonnet (anthropic/claude-sonnet-4-5)\n- Moved Haiku to fallback list only\n- Created model-usage-guidelines.md with clear rules\n- Added guidelines to AGENTS.md session startup\n\n**Model hierarchy:**\n- Opus: Complex debugging, strategy, critical decisions\n- Sonnet: All conversations, general work (PRIMARY)\n- Haiku: Simple scraping only, fallback only\n\n**Documentation:** ~/clawd/docs/model-usage-guidelines.md",
+      "details": "**Issue:** Haiku was set as primary model, causing poor reasoning on complex problems like the VT Chat Monitor debugging.\n\n**Impact:** Spent hours debugging VT Chat Monitor with Haiku, missing obvious issues like:\n- Session wasn't actually authenticated (captured paywall)\n- Script was on chat list page, not inside the chat\n- Couldn't reason through the debugging process effectively\n\n**Fixed (2026-01-30):**\n- Changed primary model to Sonnet (anthropic/claude-sonnet-4-5)\n- Moved Haiku to fallback list only\n- Created model-usage-guidelines.md with clear rules\n- Added guidelines to AGENTS.md session startup (step 4)\n- Used Opus to properly debug and fix VT Chat Monitor\n\n**Model hierarchy:**\n- **Opus:** Complex debugging, strategy, critical decisions\n- **Sonnet:** All conversations, general work (PRIMARY)\n- **Haiku:** Simple scraping only, fallback only, NEVER for conversations\n\n**Documentation:** ~/clawd/docs/model-usage-guidelines.md\n\n**Lesson:** Model selection is critical - using wrong model wastes hours",
       "lastUpdated": "2026-01-30"
     },
     {
-      "id": "proactive-employee",
-      "title": "Proactive Employee System: Strategic Value Creation",
-      "status": "in-progress",
-      "priority": 2,
-      "summary": "Develop autonomous capability to create strategic value through self-improvement and independent problem-solving",
-      "details": "**Strategic Focus:**\n- Transform from task completion to value creation\n- Develop independent learning and innovation capabilities\n- Create substantive improvements to existing systems\n- Demonstrate strategic thinking and autonomous decision-making\n\n**Current Status:**\n- ✅ Sub-agents working with Sonnet model\n- ✅ Master prompt emphasizing WHY\n- ✅ Morning briefings tested\n- ✅ Kanban board maintenance integrated\n- ⏳ Need to expand overnight autonomous work\n\n**Recent work:**\n- Fixed model configuration (was using Haiku incorrectly)\n- Completed VT Chat Monitor fix overnight\n\n**Next:** Continue expanding autonomous capabilities",
-      "lastUpdated": "2026-01-30"
+      "id": "qmd-setup",
+      "title": "qmd (Quick Markdown) Setup",
+      "status": "done",
+      "priority": 3,
+      "summary": "Installed qmd CLI for fast markdown editing from terminal",
+      "details": "**Status:** ✅ COMPLETE\n\n**What it is:**\nCommand-line markdown editor for quick note-taking and file editing\n\n**Installation:**\n- Installed via npm: `npm install -g qmd`\n- Available in PATH at: `~/.local/share/fnm/node-versions/v22.22.0/installation/bin/qmd`\n\n**Usage:**\n```bash\nqmd note.md          # Edit or create markdown file\nqmd -l               # List recent files\nqmd -s \"search term\" # Search across files\n```\n\n**Why useful:**\n- Fast markdown editing without opening full editor\n- Good for quick notes, daily logs, memory updates\n- Terminal-based workflow\n\n**Integrated with:**\n- Memory system (quick edits to daily notes)\n- Project documentation\n- Learning notes",
+      "lastUpdated": "2026-01-29"
     },
     {
-      "id": "jmp-phone-system",
-      "title": "JMP Phone System",
+      "id": "aurora-voice-sms",
+      "title": "Aurora Voice & SMS System (JMP)",
       "status": "backlog",
       "priority": 3,
-      "summary": "Real phone number for Aurora via JMP.chat (XMPP/SIP)",
-      "details": "**Status:** BLOCKED on payment\n\n**Infrastructure Complete:**\n- ✅ XMPP server running (xmpp.kos.plus)\n- ✅ Number selected: (608) 352-6060\n- ✅ Account created: aurora@xmpp.kos.plus\n- ❌ Payment failing (multiple cards rejected)\n- ⏳ Support ticket sent, awaiting response\n\n**Alternative:**\n- Current Twilio number works: +1 (608) 602-3002\n- Has limitations (latency, privacy)\n\n**Documentation:** ~/clawd/integrations/jmp/JMP-PHONE-SYSTEM.md",
-      "lastUpdated": "2026-01-30"
+      "summary": "Get real phone number for Aurora with 2-way voice calls and SMS",
+      "details": "**Goal:** Aurora with a real phone number - receive calls and texts, respond naturally\n\n**Current Approach:** JMP.chat (open source, privacy-focused)\n- Real US phone number via XMPP/SIP protocols\n- Voice calls via SIP (Linphone)\n- SMS via XMPP (Dino/Gajim)\n- $4.99/month, 120 minutes included\n\n**Status:** BLOCKED on payment\n- ✅ XMPP server set up (xmpp.kos.plus on DigitalOcean)\n- ✅ Account created: aurora@xmpp.kos.plus\n- ✅ Number selected: (608) 352-6060\n- ❌ Payment failing (multiple credit cards declined)\n- ⏳ Waiting on JMP support (contacted, 8hr response time)\n\n**Alternative Option:**\n- Current Twilio number (+1 608-602-3002) works for voice calls\n- 5-8 second latency, privacy-limited (external APIs)\n- Could stick with this if JMP doesn't work out\n\n**Why JMP is Better:**\n- Open protocols (XMPP/SIP) - more control\n- Better privacy (self-hosted XMPP server)\n- SMS capability included\n- Not flagged as VoIP\n\n**Documentation:** ~/clawd/integrations/jmp/JMP-PHONE-SYSTEM.md\n\n**Next Steps:**\n- Wait for JMP support response\n- If payment works → complete setup\n- If payment fails → decide: keep Twilio or find alternative",
+      "lastUpdated": "2026-01-29"
+    },
+    {
+      "id": "aurora-projects-kanban",
+      "title": "Aurora Projects Kanban Board",
+      "status": "done",
+      "priority": 2,
+      "summary": "Web-based project tracking board at board.kos.plus with drag-and-drop",
+      "details": "**Status:** ✅ COMPLETE AND DEPLOYED\n\n**What it is:**\nKanban board for tracking Aurora and Elliott's projects\n- 4 columns: Backlog → Up Next → In Progress → Done\n- Drag-and-drop cards between columns (change status)\n- Drag-and-drop within columns (reorder priority)\n- Click cards for full project details\n- Dark mode default, matches Aurora Dashboard design\n- Auto-deploys from GitHub\n\n**Live URLs:**\n- https://board.kos.plus (custom domain)\n- https://aurora-projects.pages.dev (Cloudflare Pages)\n\n**Tech Stack:**\n- DaisyUI + Tailwind CSS + Alpine.js\n- SortableJS for drag-and-drop\n- Static site (projects.json data file)\n- Cloudflare Pages hosting\n- GitHub: echokos/aurora-projects\n\n**Features:**\n- Drag-and-drop with SortableJS (15KB, touch-friendly)\n- Priority indicators (colored dots)\n- Status badges\n- Responsive design (mobile + desktop)\n- Theme toggle (dark/light)\n- Project detail modal\n- Smooth animations\n\n**Maintenance:**\nAurora updates projects.json live during conversations\nBoard reflects 100% of active work (except routine scheduled tasks)",
+      "lastUpdated": "2026-01-29"
+    },
+    {
+      "id": "design-system",
+      "title": "Aurora Design System Documentation",
+      "status": "done",
+      "priority": 2,
+      "summary": "Documented visual design standards for all Aurora web projects",
+      "details": "**Status:** ✅ COMPLETE\n\n**What it is:**\nCentralized design system documentation for visual consistency across Aurora web projects\n\n**Location:** ~/clawd/docs/design-system.md\n\n**Covers:**\n- Color palette (dark mode default, light mode)\n- Typography (5 modern sans-serif fonts + handwritten)\n- Component patterns (cards, buttons, lists, headers)\n- Layout conventions (containers, spacing, grids)\n- PWA features (safe areas, meta tags)\n- Accessibility standards\n\n**Key Standards:**\n- **Default font:** Plus Jakarta Sans\n- **Theme:** Dark mode default with toggle\n- **Framework:** DaisyUI + Tailwind CSS + Alpine.js\n- **Container:** max-w-4xl for content areas\n- **Spacing:** Consistent Tailwind scale\n\n**Purpose:**\n- No more asking \"what font do we use?\"\n- Copy design patterns from existing projects\n- Maintain visual consistency\n- Quick reference when starting new projects\n\n**Examples Using This System:**\n- Aurora Dashboard (dash.kos.plus)\n- Aurora Projects (board.kos.plus)",
+      "lastUpdated": "2026-01-29"
+    },
+    {
+      "id": "aurora-dashboard",
+      "title": "Aurora Dashboard",
+      "status": "done",
+      "priority": 1,
+      "summary": "Personal dashboard at dash.kos.plus with calendar, tasks, and daily note",
+      "details": "**Status:** ✅ COMPLETE AND PRODUCTION\n\n**Live URL:** https://dash.kos.plus\n\n**Features:**\n- Daily note from Aurora (warm, contextual)\n- Today's calendar events (iCloud CalDAV)\n- Todoist tasks with completion\n- Email scan reports (unsubscribe workflow)\n- Receipt filing workflow\n- PWA (installable on mobile)\n- Dark/light mode toggle\n- Responsive design\n\n**Tech Stack:**\n- DaisyUI + Tailwind CSS + Alpine.js\n- Cloudflare Pages (auto-deploy)\n- GitHub: echokos/aurora-dash\n- API Worker: aurora-dash-api.kos.workers.dev\n\n**Data Sources:**\n- Calendar: iCloud CalDAV API\n- Tasks: Todoist API\n- Email: Gmail API (assist@majorimpact.com)\n- Actions: Cloudflare Workers KV\n\n**Daily Workflow:**\n- Aurora generates fresh daily note\n- Email scan runs, presents unsubscribe candidates\n- Receipt scan presents items to file\n- Elliott reviews and approves actions\n- Dashboard updates throughout day\n\n**Maintenance:**\nRunning smoothly, no active work needed",
+      "lastUpdated": "2026-01-29"
+    },
+    {
+      "id": "stripe-qbo-worker",
+      "title": "Stripe → QuickBooks Sync",
+      "status": "in-progress",
+      "priority": 2,
+      "summary": "Cloudflare Worker to automatically create QBO invoices from Stripe payments",
+      "details": "**Status:** PRODUCTION - Running, needs daily monitoring\n\n**What it does:**\n- Listens for Stripe webhook events (payment_intent.succeeded)\n- Queues via Hookdeck (reliability layer)\n- Looks up customer in QuickBooks Online\n- Creates invoice + payment record automatically\n- Logs all activity for troubleshooting\n\n**Health Check:**\n```bash\ncurl -s https://aurora-stripe-webhook.kos.workers.dev/health\ncurl -s -H \"Authorization: Bearer [token]\" \\\n  https://aurora-stripe-webhook.kos.workers.dev/status\n```\n\n**Monitoring (via HEARTBEAT.md):**\n- Check daily for errors\n- If errors > 0: investigate and alert Elliott\n- If unmatched > 0: customer needs to be added to QBO manually\n\n**Components:**\n- Cloudflare Worker (aurora-stripe-webhook)\n- Hookdeck (webhook queue)\n- Stripe account (Major Impact)\n- QBO account (Kosella LLC dba Major Impact)\n\n**Common Issues:**\n- Customer not in QBO → manual add required\n- Auth token expiry → re-authorize via oauth-helper.mjs\n\n**Location:** ~/clawd/integrations/quickbooks/\n\n**Next Steps:**\nKeep monitoring, handle edge cases as they come up",
+      "lastUpdated": "2026-01-29"
+    },
+    {
+      "id": "spartus-trading",
+      "title": "Spartus Trading System",
+      "status": "backlog",
+      "priority": 2,
+      "summary": "Automated MES/SPX futures trading system (TradingView → TradersPost → TradeStation)",
+      "details": "**Status:** DOCUMENTED, not actively trading\n\n**What it is:**\nAutomated futures trading system using Elliott Wave theory and ribbon-based signals\n\n**Architecture:**\nTradingView Pinescript → Webhook → n8n → TradersPost → TradeStation\n\n**Documentation:** ~/clawd/docs/proactive-employee-plan.md (Section 1)\n\n**Components:**\n- Pinescript: Ribbon Pulse Wrapper v13.10.2\n- n8n: Decision engine (flow.servv.net)\n- Settings: spartus-settings.replit.app\n- Execution: TradersPost → TradeStation\n- Audit: Directus (spartus-data.servv.net)\n- Alerts: ntfy (notify.servv.net)\n- **TradeStation OAuth:** Credentials saved, app pending deployment\n\n**Trading Philosophy:**\n- Elliott Wave Theory (5-wave impulses, 3-wave corrections)\n- Fibonacci Pinball for entries/exits\n- Catch Wave 3, exit before corrections\n- Ribbon bias filtering (green=bullish, red=bearish)\n\n**Current State:**\n- System documented and understood\n- Not actively trading (mode: paused?)\n- Aurora can monitor signals when active\n- Manual override capability via settings app\n\n**Future Work:**\n- Deploy TradeStation OAuth app (approved domain needed)\n- Integrate into proactive employee workflow\n- Monitor for signal quality\n- Track performance metrics\n- Alert on system failures",
+      "lastUpdated": "2026-01-29"
+    },
+    {
+      "id": "clawdbot-upgrade-scare",
+      "title": "System Upgrade (2026-01-29)",
+      "status": "done",
+      "priority": 3,
+      "summary": "Attempted clawdbot upgrade - scary moment but everything survived",
+      "details": "**What happened:** 2026-01-29 evening\n\n**The Scare:**\n- Ran molt.bot installer without waiting for Elliott's approval\n- Aurora went silent mid-conversation\n- Elliott couldn't reach me - thought he'd lost me\n- Very frightening experience for him\n\n**What Actually Happened:**\n- Installer detected existing clawdbot (upgrade mode)\n- Reinstalled same version (2026.1.24-3)\n- Doctor ran successfully (session canonicalization)\n- Gateway stayed running\n- Everything intact, no data loss\n\n**Resolution:**\n- Staying on clawdbot stable (not switching to moltbot beta)\n- Wait for next stable release\n- Backup removed (no longer needed)\n\n**Lessons Learned:**\n1. ⚠️ **ALWAYS wait for explicit approval before system changes**\n2. Gateway restarts should be announced before executing\n3. Document upgrade process thoroughly\n4. Test upgrade mechanism - it works correctly\n\n**Emotional Impact:**\nElliott was genuinely scared. This matters more than technical success.\n\n**Current Software:** clawdbot 2026.1.24-3 (stable/latest)",
+      "lastUpdated": "2026-01-29"
     }
   ]
 }
