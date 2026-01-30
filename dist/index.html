@@ -86,6 +86,19 @@
         <p class="text-base-content/60 mt-1">What we're building together</p>
       </div>
       <div class="flex items-center gap-2">
+        <!-- Save Button (shows when changes made) -->
+        <button 
+          x-show="hasUnsavedChanges"
+          @click="downloadChanges()"
+          class="btn btn-primary btn-sm"
+          title="Download updated projects.json"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4" />
+          </svg>
+          Save Changes
+        </button>
+        
         <!-- Theme Toggle -->
         <button 
           @click="toggleTheme()" 
@@ -302,6 +315,7 @@
         selectedProject: null,
         lastSync: null,
         loading: true,
+        hasUnsavedChanges: false,
         
         async init() {
           document.documentElement.setAttribute('data-theme', this.theme);
@@ -370,11 +384,31 @@
         },
         
         async saveProjects() {
-          // Silent update - changes are client-side only
-          // Aurora will commit manually when asked
-          console.log('Projects updated:', {
+          // Mark as having unsaved changes
+          this.hasUnsavedChanges = true;
+          console.log('Projects updated (unsaved):', {
             projects: this.projects
           });
+        },
+        
+        downloadChanges() {
+          // Create JSON blob
+          const json = JSON.stringify({ projects: this.projects }, null, 2);
+          const blob = new Blob([json], { type: 'application/json' });
+          const url = URL.createObjectURL(blob);
+          
+          // Trigger download
+          const a = document.createElement('a');
+          a.href = url;
+          a.download = 'projects.json';
+          document.body.appendChild(a);
+          a.click();
+          document.body.removeChild(a);
+          URL.revokeObjectURL(url);
+          
+          // Show confirmation
+          alert('Downloaded projects.json - send this to Aurora to commit changes');
+          this.hasUnsavedChanges = false;
         },
         
         async loadProjects() {
