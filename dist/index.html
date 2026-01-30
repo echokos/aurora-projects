@@ -391,24 +391,36 @@
           });
         },
         
-        downloadChanges() {
-          // Create JSON blob
-          const json = JSON.stringify({ projects: this.projects }, null, 2);
-          const blob = new Blob([json], { type: 'application/json' });
-          const url = URL.createObjectURL(blob);
-          
-          // Trigger download
-          const a = document.createElement('a');
-          a.href = url;
-          a.download = 'projects.json';
-          document.body.appendChild(a);
-          a.click();
-          document.body.removeChild(a);
-          URL.revokeObjectURL(url);
-          
-          // Show confirmation
-          alert('Downloaded projects.json - send this to Aurora to commit changes');
-          this.hasUnsavedChanges = false;
+        async downloadChanges() {
+          try {
+            // Save to GitHub via Worker API
+            const response = await fetch('https://aurora-projects-api.kos.workers.dev/', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify({
+                projects: this.projects
+              })
+            });
+
+            const result = await response.json();
+
+            if (result.success) {
+              alert('✅ Changes saved! Board will update in ~30 seconds.');
+              this.hasUnsavedChanges = false;
+              
+              // Reload after 30 seconds to get fresh data
+              setTimeout(() => {
+                window.location.reload();
+              }, 30000);
+            } else {
+              throw new Error(result.error || 'Save failed');
+            }
+          } catch (error) {
+            console.error('Save error:', error);
+            alert('❌ Failed to save: ' + error.message);
+          }
         },
         
         async loadProjects() {
