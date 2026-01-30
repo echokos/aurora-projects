@@ -6,7 +6,7 @@
       "status": "up-next",
       "priority": 1,
       "summary": "Auto-update Elliott's Obsidian daily notes with calendar, tasks, and meeting logs",
-      "details": "**Goal:** Eliminate manual daily note updates - Aurora maintains it throughout the day\n\n**From Discovery Brainstorm (2026-01-30):**\n- Elliott checks calendar constantly to remember upcoming appointments\n- Obsidian daily notes not being updated consistently\n- Wants auto-population of: One Thing, Next Things (from MS To Do), Log (calendar + meetings)\n\n**Current Access:**\n- ✅ Obsidian vault at ~/clawd/obsidian/ (GitHub sync)\n- ✅ MS365 To Do API working (19 lists, top priorities identified)\n- ✅ Calendar events (iCloud + MS365)\n- ✅ Daily note template structure understood\n\n**Implementation:**\n1. Create daily note from template if missing\n2. Auto-populate Log with calendar events throughout day\n3. Pull top 3-5 starred/important tasks from MS To Do → Next Things\n4. Add meeting summaries when recordings/transcripts provided\n5. Git commit/push → syncs to Elliott's Obsidian within 10min\n\n**Phase 1 (Start Today):**\n- Daily note creation + calendar in Log\n- Git sync working\n\n**Phase 2 (This Week):**\n- MS To Do integration for Next Things\n- Meeting summary integration\n\n**Success:** Elliott's daily note is always current, reducing calendar checking and note-keeping burden",
+      "details": "**Goal:** Eliminate manual daily note updates - Aurora maintains it throughout the day\n\n**From Discovery Brainstorm (2026-01-30):**\n- Elliott checks calendar constantly to remember upcoming appointments\n- Obsidian daily notes not being updated consistently\n- Wants auto-population of: One Thing, Next Things (from MS To Do), Log (calendar + meetings)\n\n**Current Access:**\n- ✅ Obsidian vault at ~/clawd/obsidian/ (Obsidian Sync)\n- ✅ Obsidian installed on elliott-nuc (2026-01-30)\n- ✅ Obsidian Sync enabled - instant sync to all devices\n- ✅ GitHub sync disabled (Obsidian Sync replaced it)\n- ✅ MS365 To Do API working (19 lists, top priorities identified)\n- ✅ Calendar events (iCloud + MS365)\n- ✅ Daily note template structure understood\n\n**Implementation:**\n1. Create daily note from template if missing\n2. Auto-populate Log with calendar events throughout day\n3. Pull top 3-5 starred/important tasks from MS To Do → Next Things\n4. Add meeting summaries when recordings/transcripts provided\n5. Write to ~/clawd/obsidian/ → Obsidian Sync pushes to all devices instantly\n\n**Phase 1 (Ready to Build):**\n- Daily note creation + calendar in Log\n- Obsidian Sync working for instant propagation\n\n**Phase 2 (This Week):**\n- MS To Do integration for Next Things\n- Meeting summary integration\n\n**Success:** Elliott's daily note is always current, reducing calendar checking and note-keeping burden",
       "lastUpdated": "2026-01-30"
     },
     {
@@ -19,21 +19,12 @@
       "lastUpdated": "2026-01-30"
     },
     {
-      "id": "1password-cli-fix",
-      "title": "1Password CLI Configuration Fix",
-      "status": "in-progress",
-      "priority": 1,
-      "summary": "Fix 1Password CLI config to restore iCloud email check",
-      "details": "**Issue:** 1Password CLI config corrupted during VT Chat Monitor debugging\n- iCloud email check failing (can't retrieve app password)\n- Config file has wrong JSON structure\n- Needs desktop app authorization\n\n**Impact:**\n- Midday email check can't access iCloud inbox\n- Dashboard showing iCloud as failed\n\n**Fix Required:**\n1. Elliott approves 1Password CLI in desktop app\n2. Run `op signin` and approve authorization\n3. Test iCloud email retrieval\n4. Verify midday email check works\n\n**Reminder:** Tell Elliott to fix this when back at office (he's driving as of 12pm)",
-      "lastUpdated": "2026-01-30"
-    },
-    {
       "id": "meeting-transcript-processing",
       "title": "Meeting Transcript Processing Pipeline",
       "status": "backlog",
       "priority": 2,
       "summary": "iOS recording → transcription → summary → Obsidian daily log",
-      "details": "**Goal:** Eliminate manual meeting note-taking\n\n**From Discovery Brainstorm:**\n- Currently using Plaud device (manual: connect app, pull audio, transcribe)\n- Wants more automatic workflow\n- Meeting transcript → processed summary → daily log in Obsidian\n- Extract action items + follow-ups\n\n**Proposed Workflow:**\n**Option A (iOS Native):**\n1. iOS Voice Memos recording\n2. Share to assist@majorimpact.com (email trigger)\n3. Aurora transcribes (Whisper API)\n4. Generate summary + action items\n5. Add to Obsidian daily Log\n6. Git sync to Elliott's vault\n\n**Option B (iOS Shortcuts):**\n1. iOS Shortcuts automation\n2. Auto-upload to Dropbox/Drive folder\n3. Aurora monitors folder\n4. Same transcription/processing flow\n\n**Output Format:**\n- Meeting title/attendees\n- High-level summary (2-3 sentences)\n- Key discussion points\n- Action items with owners\n- Decisions made\n\n**Integration:** Feeds into Obsidian daily note automation",
+      "details": "**Goal:** Eliminate manual meeting note-taking\n\n**From Discovery Brainstorm:**\n- Currently using Plaud device (manual: connect app, pull audio, transcribe)\n- Wants more automatic workflow\n- Meeting transcript → processed summary → daily log in Obsidian\n- Extract action items + follow-ups\n\n**Proposed Workflow:**\n**Option A (iOS Native):**\n1. iOS Voice Memos recording\n2. Share to assist@majorimpact.com (email trigger)\n3. Aurora transcribes (Whisper API)\n4. Generate summary + action items\n5. Add to Obsidian daily Log\n6. Obsidian Sync → all devices instantly\n\n**Option B (iOS Shortcuts):**\n1. iOS Shortcuts automation\n2. Auto-upload to Dropbox/Drive folder\n3. Aurora monitors folder\n4. Same transcription/processing flow\n\n**Output Format:**\n- Meeting title/attendees\n- High-level summary (2-3 sentences)\n- Key discussion points\n- Action items with owners\n- Decisions made\n\n**Integration:** Feeds into Obsidian daily note automation",
       "lastUpdated": "2026-01-30"
     },
     {
@@ -78,7 +69,7 @@
       "status": "in-progress",
       "priority": 1,
       "summary": "Transform Aurora into 24/7 autonomous employee that completes work overnight",
-      "details": "**Goal:** Wake up to completed work, not a blank slate\n\n**Current Status:**\n- ✅ Sub-agents working with Sonnet model (fixed from Haiku)\n- ✅ Master prompt APPROVED and installed in AGENTS.md\n- ✅ Plan documented (~/clawd/docs/proactive-employee-plan.md)\n- ✅ Kanban board management integrated\n- ✅ Testing overnight autonomous workflows\n- ✅ Model usage guidelines created and added to session startup\n- ⏳ Morning briefing cron (6am variable, 7 variants) - needs deployment\n- ⏳ Heartbeat checks for email/calendar/tasks\n\n**Components:**\n- Morning briefing (6am variable cron)\n- Email/calendar/task scanning via heartbeat\n- Trade signal monitoring (VT, Spartus)\n- Dashboard updates (daily note generation)\n- Receipt filing automation\n- Kanban board maintenance (update live during conversations)\n\n**Recent work (2026-01-30):**\n- Fixed VT Chat Monitor (session + scraping issues)\n- Fixed model configuration (Sonnet now primary)\n- Added model-usage-guidelines.md to session startup\n- Discovery brainstorm → 7 new high-value projects identified\n\n**Waiting on:**\n- Directus API access for trade analysis\n\n**Next Steps:**\n- Continue expanding autonomous capabilities\n- Deploy morning brief cron\n- Document overnight workflow patterns",
+      "details": "**Goal:** Wake up to completed work, not a blank slate\n\n**Current Status:**\n- ✅ Sub-agents working with Sonnet model (fixed from Haiku)\n- ✅ Master prompt APPROVED and installed in AGENTS.md\n- ✅ Plan documented (~/clawd/docs/proactive-employee-plan.md)\n- ✅ Kanban board management integrated\n- ✅ Testing overnight autonomous workflows\n- ✅ Model usage guidelines created and added to session startup\n- ⏳ Morning briefing cron (6am variable, 7 variants) - needs deployment\n- ⏳ Heartbeat checks for email/calendar/tasks\n\n**Components:**\n- Morning briefing (6am variable cron)\n- Email/calendar/task scanning via heartbeat\n- Trade signal monitoring (VT, Spartus)\n- Dashboard updates (daily note generation)\n- Receipt filing automation\n- Kanban board maintenance (update live during conversations)\n\n**Recent work (2026-01-30):**\n- Fixed VT Chat Monitor (session + scraping issues)\n- Fixed model configuration (Sonnet now primary)\n- Added model-usage-guidelines.md to session startup\n- Discovery brainstorm → 7 new high-value projects identified\n- Updated avatars (lifelike seed image finalized)\n- Set up Obsidian Sync for instant propagation\n\n**Waiting on:**\n- Directus API access for trade analysis\n\n**Next Steps:**\n- Continue expanding autonomous capabilities\n- Deploy morning brief cron\n- Document overnight workflow patterns",
       "lastUpdated": "2026-01-30"
     },
     {
@@ -115,6 +106,15 @@
       "priority": 1,
       "summary": "Fixed Haiku being used for conversations - Sonnet now primary",
       "details": "**Issue:** Haiku was set as primary model, causing poor reasoning on complex problems like the VT Chat Monitor debugging.\n\n**Impact:** Spent hours debugging VT Chat Monitor with Haiku, missing obvious issues like:\n- Session wasn't actually authenticated (captured paywall)\n- Script was on chat list page, not inside the chat\n- Couldn't reason through the debugging process effectively\n\n**Fixed (2026-01-30):**\n- Changed primary model to Sonnet (anthropic/claude-sonnet-4-5)\n- Moved Haiku to fallback list only\n- Created model-usage-guidelines.md with clear rules\n- Added guidelines to AGENTS.md session startup (step 4)\n- Used Opus to properly debug and fix VT Chat Monitor\n\n**Model hierarchy:**\n- **Opus:** Complex debugging, strategy, critical decisions\n- **Sonnet:** All conversations, general work (PRIMARY)\n- **Haiku:** Simple scraping only, fallback only, NEVER for conversations\n\n**Documentation:** ~/clawd/docs/model-usage-guidelines.md\n\n**Lesson:** Model selection is critical - using wrong model wastes hours",
+      "lastUpdated": "2026-01-30"
+    },
+    {
+      "id": "1password-cli-fix",
+      "title": "1Password CLI Configuration Fix",
+      "status": "done",
+      "priority": 1,
+      "summary": "Fixed 1Password CLI to restore iCloud email check",
+      "details": "**Issue:** 1Password CLI config corrupted during VT Chat Monitor debugging\n- iCloud email check failing (can't retrieve app password)\n- Config file has wrong JSON structure\n- Needed desktop app authorization\n\n**Impact:**\n- Midday email check couldn't access iCloud inbox\n- Dashboard showing iCloud as failed\n\n**Fixed (2026-01-30):**\n1. Elliott approved 1Password CLI in desktop app ✅\n2. Ran `op signin` and approved authorization ✅\n3. Tested iCloud email retrieval ✅\n4. Verified working with --vault flag ✅\n\n**Status:** ✅ COMPLETE - 1Password CLI working correctly",
       "lastUpdated": "2026-01-30"
     },
     {
