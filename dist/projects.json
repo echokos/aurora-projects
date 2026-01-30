@@ -1,0 +1,58 @@
+{
+  "projects": [
+    {
+      "id": "proactive-employee",
+      "title": "Proactive Employee System",
+      "status": "in-progress",
+      "priority": 1,
+      "summary": "AI assistant that proactively handles routine tasks",
+      "details": "Full autonomous AI agent system:\n\n**Components:**\n- Morning briefing (6am variable cron)\n- Periodic email/calendar checks via heartbeat\n- Trade signal monitoring (Volatility Therapy)\n- Dashboard updates\n- Receipt filing\n\n**Status:** Sub-agents working with Haiku model, master prompt drafted\n\n**Blockers:**\n- VT docs still needed\n- Cron jobs not yet configured\n- Final approval on proactive prompt",
+      "lastUpdated": "2026-01-29"
+    },
+    {
+      "id": "vt-swing-monitoring",
+      "title": "Volatility Therapy Swing Trading",
+      "status": "done",
+      "priority": 2,
+      "summary": "Monitor VT Discord for swing signals, track positions",
+      "details": "**Completed:**\n- Full documentation at ~/clawd/projects/volatility-therapy-swing.md\n- vt-signal-monitor.js for Discord monitoring\n- Manual execution workflows documented\n\n**System:**\n- Monitors #swing-signals in VT Discord\n- Notifies via ntfy (vt-alerts topic)\n- Manual execution in Tradovate\n- Position tracking in Directus",
+      "lastUpdated": "2026-01-29"
+    },
+    {
+      "id": "jmp-phone-number",
+      "title": "JMP.chat Phone Number",
+      "status": "backlog",
+      "priority": 3,
+      "summary": "Get dedicated phone number via JMP (XMPP/SIP)",
+      "details": "**Goal:** Real phone number for Aurora via open protocols\n\n**Status:** Payment blocked, waiting on JMP support\n\n**What's done:**\n- XMPP server set up (xmpp.kos.plus)\n- Account created: aurora@xmpp.kos.plus\n- Number selected: (608) 352-6060\n\n**Blocker:** Credit cards declined, JMP support contacted (8hr response time)",
+      "lastUpdated": "2026-01-29"
+    },
+    {
+      "id": "aurora-dashboard",
+      "title": "Aurora Dashboard",
+      "status": "done",
+      "priority": 1,
+      "summary": "Personal dashboard at dash.kos.plus",
+      "details": "**Completed:** ✅\n\n**Features:**\n- Daily note from Aurora\n- Calendar events (iCloud CalDAV)\n- Todoist tasks with completion\n- Email scan reports\n- Receipt filing\n- PWA (installable on mobile)\n\n**URL:** https://dash.kos.plus\n**Repo:** echokos/aurora-dash (Cloudflare Pages)",
+      "lastUpdated": "2026-01-29"
+    },
+    {
+      "id": "haiku-model-fix",
+      "title": "Haiku Model Configuration",
+      "status": "done",
+      "priority": 1,
+      "summary": "Fixed sub-agent model ID mismatch",
+      "details": "**Problem:** Sub-agents couldn't use Haiku - \"model not allowed\" error\n\n**Root cause:** Model ID was wrong in config\n- ❌ Wrong: anthropic/claude-haiku-3-5\n- ✅ Correct: anthropic/claude-3-5-haiku-20241022\n\n**Impact:** Sub-agents now cost-effective (~$0.001/turn vs $0.07+)\n\n**Documented:** Added to MEMORY.md for future reference",
+      "lastUpdated": "2026-01-29"
+    },
+    {
+      "id": "stripe-qbo-worker",
+      "title": "Stripe → QuickBooks Worker",
+      "status": "in-progress",
+      "priority": 2,
+      "summary": "Cloudflare Worker to sync Stripe payments to QBO",
+      "details": "**Status:** Running, needs daily monitoring\n\n**Health check:**\n```bash\ncurl -s https://aurora-stripe-webhook.kos.workers.dev/health\n```\n\n**What it does:**\n- Listens for Stripe webhooks\n- Creates QBO invoices automatically\n- Queues via Hookdeck\n\n**Monitoring:** Check daily via HEARTBEAT.md",
+      "lastUpdated": "2026-01-29"
+    }
+  ]
+}

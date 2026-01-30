@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Aurora Projects</title>
+  
+  <!-- PWA Meta Tags -->
+  <meta name="theme-color" content="#1a1a2e" media="(prefers-color-scheme: dark)">
+  <meta name="theme-color" content="#f0f0f5" media="(prefers-color-scheme: light)">
+  <meta name="description" content="Project tracking for Aurora and Elliott">
+  
+  <!-- Styles -->
+  <link href="https://cdn.jsdelivr.net/npm/daisyui@4.6.0/dist/full.min.css" rel="stylesheet" type="text/css" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=DM+Sans:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700&family=Manrope:wght@300;400;500;600;700&family=Caveat:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+  
+  <style>
+    /* PWA safe area handling */
+    html {
+      background-color: oklch(0.269 0.015 264);
+    }
+    [data-theme="light"] html {
+      background-color: oklch(0.95 0.01 264);
+    }
+    body {
+      padding-top: env(safe-area-inset-top, 0);
+      padding-left: env(safe-area-inset-left, 0);
+      padding-right: env(safe-area-inset-right, 0);
+      padding-bottom: env(safe-area-inset-bottom, 0);
+    }
+    [data-theme="dark"] body {
+      background-color: oklch(0.269 0.015 264);
+    }
+    [data-theme="light"] body {
+      background-color: oklch(0.95 0.01 264);
+    }
+    
+    .font-inter { font-family: 'Inter', sans-serif; }
+    .font-jakarta { font-family: 'Plus Jakarta Sans', sans-serif; }
+    .font-dm { font-family: 'DM Sans', sans-serif; }
+    .font-outfit { font-family: 'Outfit', sans-serif; }
+    .font-manrope { font-family: 'Manrope', sans-serif; }
+    .font-handwritten { font-family: 'Caveat', cursive; }
+    
+    [x-cloak] { display: none !important; }
+    
+    /* Card modal backdrop */
+    .modal-backdrop {
+      background-color: rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(4px);
+    }
+    
+    /* Smooth height transitions */
+    .kanban-column {
+      min-height: 200px;
+    }
+  </style>
+</head>
+<body class="min-h-screen bg-base-200 font-jakarta" x-data="kanban()" x-cloak>
+  
+  <div class="container mx-auto px-4 pb-8 max-w-7xl pt-8">
+    
+    <!-- Header -->
+    <div class="flex items-center justify-between mb-8">
+      <div>
+        <h1 class="text-3xl font-semibold">Aurora Projects</h1>
+        <p class="text-base-content/60 mt-1">What we're building together</p>
+      </div>
+      <div class="flex items-center gap-2">
+        <!-- Theme Toggle -->
+        <button 
+          @click="toggleTheme()" 
+          class="btn btn-ghost btn-sm btn-square"
+          :title="theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'"
+        >
+          <svg x-show="theme === 'dark'" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+          </svg>
+          <svg x-show="theme === 'light'" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Kanban Board -->
+    <div class="grid grid-cols-1 lg:grid-cols-4 gap-6">
+      
+      <!-- Backlog Column -->
+      <div class="kanban-column">
+        <h2 class="text-xs font-medium text-base-content/40 uppercase tracking-wide mb-3 px-1">
+          Backlog
+          <span class="badge badge-sm badge-ghost ml-2" x-text="getProjectsByStatus('backlog').length"></span>
+        </h2>
+        <div class="space-y-3">
+          <template x-for="project in getProjectsByStatus('backlog')" :key="project.id">
+            <div 
+              @click="openProject(project)"
+              class="card bg-base-100 shadow-sm border border-base-300 hover:border-primary/50 cursor-pointer transition-all hover:shadow-md"
+            >
+              <div class="card-body p-4">
+                <h3 class="font-semibold text-sm leading-tight" x-text="project.title"></h3>
+                <p class="text-xs text-base-content/60 mt-2 line-clamp-2" x-text="project.summary"></p>
+                <div class="flex items-center justify-between mt-3">
+                  <span class="text-xs text-base-content/40" x-text="formatDate(project.lastUpdated)"></span>
+                  <div 
+                    class="w-2 h-2 rounded-full"
+                    :class="getPriorityColor(project.priority)"
+                    x-show="project.priority <= 2"
+                  ></div>
+                </div>
+              </div>
+            </div>
+          </template>
+          <div class="text-center py-8 text-base-content/30" x-show="getProjectsByStatus('backlog').length === 0">
+            <p class="text-sm">No backlog items</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Up Next Column -->
+      <div class="kanban-column">
+        <h2 class="text-xs font-medium text-base-content/40 uppercase tracking-wide mb-3 px-1">
+          Up Next
+          <span class="badge badge-sm badge-ghost ml-2" x-text="getProjectsByStatus('up-next').length"></span>
+        </h2>
+        <div class="space-y-3">
+          <template x-for="project in getProjectsByStatus('up-next')" :key="project.id">
+            <div 
+              @click="openProject(project)"
+              class="card bg-base-100 shadow-sm border border-base-300 hover:border-primary/50 cursor-pointer transition-all hover:shadow-md"
+            >
+              <div class="card-body p-4">
+                <h3 class="font-semibold text-sm leading-tight" x-text="project.title"></h3>
+                <p class="text-xs text-base-content/60 mt-2 line-clamp-2" x-text="project.summary"></p>
+                <div class="flex items-center justify-between mt-3">
+                  <span class="text-xs text-base-content/40" x-text="formatDate(project.lastUpdated)"></span>
+                  <div 
+                    class="w-2 h-2 rounded-full"
+                    :class="getPriorityColor(project.priority)"
+                    x-show="project.priority <= 2"
+                  ></div>
+                </div>
+              </div>
+            </div>
+          </template>
+          <div class="text-center py-8 text-base-content/30" x-show="getProjectsByStatus('up-next').length === 0">
+            <p class="text-sm">Nothing queued</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- In Progress Column -->
+      <div class="kanban-column">
+        <h2 class="text-xs font-medium text-base-content/40 uppercase tracking-wide mb-3 px-1">
+          In Progress
+          <span class="badge badge-sm badge-primary ml-2" x-text="getProjectsByStatus('in-progress').length"></span>
+        </h2>
+        <div class="space-y-3">
+          <template x-for="project in getProjectsByStatus('in-progress')" :key="project.id">
+            <div 
+              @click="openProject(project)"
+              class="card bg-base-100 shadow-sm border border-primary/30 hover:border-primary cursor-pointer transition-all hover:shadow-md"
+            >
+              <div class="card-body p-4">
+                <h3 class="font-semibold text-sm leading-tight" x-text="project.title"></h3>
+                <p class="text-xs text-base-content/60 mt-2 line-clamp-2" x-text="project.summary"></p>
+                <div class="flex items-center justify-between mt-3">
+                  <span class="text-xs text-base-content/40" x-text="formatDate(project.lastUpdated)"></span>
+                  <div 
+                    class="w-2 h-2 rounded-full bg-primary animate-pulse"
+                  ></div>
+                </div>
+              </div>
+            </div>
+          </template>
+          <div class="text-center py-8 text-base-content/30" x-show="getProjectsByStatus('in-progress').length === 0">
+            <p class="text-sm">Nothing active</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Done Column -->
+      <div class="kanban-column">
+        <h2 class="text-xs font-medium text-base-content/40 uppercase tracking-wide mb-3 px-1">
+          Done
+          <span class="badge badge-sm badge-success ml-2" x-text="getProjectsByStatus('done').length"></span>
+        </h2>
+        <div class="space-y-3">
+          <template x-for="project in getProjectsByStatus('done')" :key="project.id">
+            <div 
+              @click="openProject(project)"
+              class="card bg-base-100 shadow-sm border border-success/20 hover:border-success/50 cursor-pointer transition-all hover:shadow-md opacity-60 hover:opacity-100"
+            >
+              <div class="card-body p-4">
+                <h3 class="font-semibold text-sm leading-tight" x-text="project.title"></h3>
+                <p class="text-xs text-base-content/60 mt-2 line-clamp-2" x-text="project.summary"></p>
+                <div class="flex items-center justify-between mt-3">
+                  <span class="text-xs text-base-content/40" x-text="formatDate(project.lastUpdated)"></span>
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-success" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                  </svg>
+                </div>
+              </div>
+            </div>
+          </template>
+          <div class="text-center py-8 text-base-content/30" x-show="getProjectsByStatus('done').length === 0">
+            <p class="text-sm">Nothing completed yet</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Footer -->
+    <div class="text-center mt-12 text-xs text-base-content/40">
+      <p>Last updated: <span x-text="formatDate(lastSync)"></span></p>
+    </div>
+
+  </div>
+
+  <!-- Project Detail Modal -->
+  <div 
+    x-show="selectedProject !== null" 
+    @click.self="closeProject()"
+    class="modal modal-open"
+    style="display: none;"
+  >
+    <div class="modal-box max-w-2xl relative" @click.away="closeProject()">
+      <button 
+        @click="closeProject()" 
+        class="btn btn-sm btn-circle btn-ghost absolute right-4 top-4"
+      >✕</button>
+      
+      <template x-if="selectedProject">
+        <div>
+          <!-- Header -->
+          <div class="mb-6">
+            <div class="flex items-center gap-3 mb-2">
+              <h3 class="text-2xl font-semibold" x-text="selectedProject.title"></h3>
+              <div 
+                class="badge badge-sm"
+                :class="{
+                  'badge-ghost': selectedProject.status === 'backlog',
+                  'badge-info': selectedProject.status === 'up-next',
+                  'badge-primary': selectedProject.status === 'in-progress',
+                  'badge-success': selectedProject.status === 'done'
+                }"
+                x-text="selectedProject.status.replace('-', ' ')"
+              ></div>
+            </div>
+            <p class="text-base-content/60" x-text="selectedProject.summary"></p>
+          </div>
+
+          <!-- Details -->
+          <div class="prose prose-sm max-w-none">
+            <div 
+              class="whitespace-pre-wrap text-sm leading-relaxed"
+              x-html="formatDetails(selectedProject.details)"
+            ></div>
+          </div>
+
+          <!-- Meta -->
+          <div class="mt-6 pt-4 border-t border-base-300 text-xs text-base-content/50">
+            <p>Last updated: <span x-text="formatDate(selectedProject.lastUpdated)"></span></p>
+            <p class="mt-1">Priority: <span x-text="selectedProject.priority"></span></p>
+          </div>
+        </div>
+      </template>
+    </div>
+    <div class="modal-backdrop" @click="closeProject()"></div>
+  </div>
+
+  <script>
+    function kanban() {
+      return {
+        theme: localStorage.getItem('theme') || 'dark',
+        projects: [],
+        selectedProject: null,
+        lastSync: null,
+        loading: true,
+        
+        async init() {
+          document.documentElement.setAttribute('data-theme', this.theme);
+          await this.loadProjects();
+        },
+        
+        async loadProjects() {
+          try {
+            const response = await fetch('/projects.json?t=' + Date.now());
+            const data = await response.json();
+            this.projects = data.projects || [];
+            this.lastSync = new Date();
+          } catch (e) {
+            console.error('Failed to load projects:', e);
+          }
+          this.loading = false;
+        },
+        
+        getProjectsByStatus(status) {
+          return this.projects
+            .filter(p => p.status === status)
+            .sort((a, b) => a.priority - b.priority);
+        },
+        
+        openProject(project) {
+          this.selectedProject = project;
+        },
+        
+        closeProject() {
+          this.selectedProject = null;
+        },
+        
+        toggleTheme() {
+          this.theme = this.theme === 'dark' ? 'light' : 'dark';
+          document.documentElement.setAttribute('data-theme', this.theme);
+          localStorage.setItem('theme', this.theme);
+        },
+        
+        formatDate(date) {
+          if (!date) return '';
+          const d = new Date(date);
+          return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+        },
+        
+        formatDetails(text) {
+          if (!text) return '';
+          // Convert markdown-style **bold** to HTML
+          return text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+        },
+        
+        getPriorityColor(priority) {
+          switch (priority) {
+            case 1: return 'bg-error';
+            case 2: return 'bg-warning';
+            case 3: return 'bg-info';
+            default: return 'bg-base-300';
+          }
+        }
+      }
+    }
+  </script>
+
+</body>
+</html>
