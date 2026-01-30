@@ -1,12 +1,84 @@
 {
   "projects": [
     {
+      "id": "obsidian-daily-automation",
+      "title": "Obsidian Daily Note Automation",
+      "status": "up-next",
+      "priority": 1,
+      "summary": "Auto-update Elliott's Obsidian daily notes with calendar, tasks, and meeting logs",
+      "details": "**Goal:** Eliminate manual daily note updates - Aurora maintains it throughout the day\n\n**From Discovery Brainstorm (2026-01-30):**\n- Elliott checks calendar constantly to remember upcoming appointments\n- Obsidian daily notes not being updated consistently\n- Wants auto-population of: One Thing, Next Things (from MS To Do), Log (calendar + meetings)\n\n**Current Access:**\n- ✅ Obsidian vault at ~/clawd/obsidian/ (GitHub sync)\n- ✅ MS365 To Do API working (19 lists, top priorities identified)\n- ✅ Calendar events (iCloud + MS365)\n- ✅ Daily note template structure understood\n\n**Implementation:**\n1. Create daily note from template if missing\n2. Auto-populate Log with calendar events throughout day\n3. Pull top 3-5 starred/important tasks from MS To Do → Next Things\n4. Add meeting summaries when recordings/transcripts provided\n5. Git commit/push → syncs to Elliott's Obsidian within 10min\n\n**Phase 1 (Start Today):**\n- Daily note creation + calendar in Log\n- Git sync working\n\n**Phase 2 (This Week):**\n- MS To Do integration for Next Things\n- Meeting summary integration\n\n**Success:** Elliott's daily note is always current, reducing calendar checking and note-keeping burden",
+      "lastUpdated": "2026-01-30"
+    },
+    {
+      "id": "micro-saas-discovery-engine",
+      "title": "Micro-SaaS Discovery Engine",
+      "status": "backlog",
+      "priority": 1,
+      "summary": "Autonomous system to discover sellable tool opportunities with high demand + weak competition",
+      "details": "**Goal:** Continuously discover micro-SaaS opportunities for recurring revenue\n\n**From Discovery Brainstorm (2026-01-30):**\n- Find pain points people search for (Reddit, forums, search data)\n- Validate: high search volume + weak/crappy competition\n- Like Stripe→QBO sync ($15-20/mo, simple, minimal support)\n- Not limited to business tools - ANY category (crafts, gardening, hobbies, etc.)\n\n**System Architecture:**\n1. **Scout Agents (Haiku)** - Browse Reddit/forums across ALL topics for recurring problems\n2. **Validator Agent (Haiku)** - Check search volume + competition analysis\n3. **Analyst Agent (Sonnet)** - Deep research on competitors, pricing, viability\n4. **Aurora (Sonnet)** - Synthesize findings, decide what's worth presenting\n5. **Database** - Track what's been researched, branch into promising areas\n\n**Discovery Process:**\n- Start broad (all human interests)\n- When viable niche found → go DEEPER in that area\n- Systematically expand + track coverage\n- Self-feeding: good opportunities trigger more nearby research\n- Present Elliott with 2-3 validated opportunities weekly\n\n**Success Criteria:**\n- Runs autonomously overnight\n- Validates demand + competition before presenting\n- Elliott only sees winners worth building\n- Eventually feeds into build pipeline (design→build→QA→deploy→support agents)\n\n**Next Steps:**\n1. Design research database structure\n2. Build scout agent prototype (single topic branch)\n3. Add validator layer\n4. Create weekly reporting format",
+      "lastUpdated": "2026-01-30"
+    },
+    {
+      "id": "1password-cli-fix",
+      "title": "1Password CLI Configuration Fix",
+      "status": "in-progress",
+      "priority": 1,
+      "summary": "Fix 1Password CLI config to restore iCloud email check",
+      "details": "**Issue:** 1Password CLI config corrupted during VT Chat Monitor debugging\n- iCloud email check failing (can't retrieve app password)\n- Config file has wrong JSON structure\n- Needs desktop app authorization\n\n**Impact:**\n- Midday email check can't access iCloud inbox\n- Dashboard showing iCloud as failed\n\n**Fix Required:**\n1. Elliott approves 1Password CLI in desktop app\n2. Run `op signin` and approve authorization\n3. Test iCloud email retrieval\n4. Verify midday email check works\n\n**Reminder:** Tell Elliott to fix this when back at office (he's driving as of 12pm)",
+      "lastUpdated": "2026-01-30"
+    },
+    {
+      "id": "meeting-transcript-processing",
+      "title": "Meeting Transcript Processing Pipeline",
+      "status": "backlog",
+      "priority": 2,
+      "summary": "iOS recording → transcription → summary → Obsidian daily log",
+      "details": "**Goal:** Eliminate manual meeting note-taking\n\n**From Discovery Brainstorm:**\n- Currently using Plaud device (manual: connect app, pull audio, transcribe)\n- Wants more automatic workflow\n- Meeting transcript → processed summary → daily log in Obsidian\n- Extract action items + follow-ups\n\n**Proposed Workflow:**\n**Option A (iOS Native):**\n1. iOS Voice Memos recording\n2. Share to assist@majorimpact.com (email trigger)\n3. Aurora transcribes (Whisper API)\n4. Generate summary + action items\n5. Add to Obsidian daily Log\n6. Git sync to Elliott's vault\n\n**Option B (iOS Shortcuts):**\n1. iOS Shortcuts automation\n2. Auto-upload to Dropbox/Drive folder\n3. Aurora monitors folder\n4. Same transcription/processing flow\n\n**Output Format:**\n- Meeting title/attendees\n- High-level summary (2-3 sentences)\n- Key discussion points\n- Action items with owners\n- Decisions made\n\n**Integration:** Feeds into Obsidian daily note automation",
+      "lastUpdated": "2026-01-30"
+    },
+    {
+      "id": "meeting-prep-briefs",
+      "title": "Meeting Prep Intelligence",
+      "status": "backlog",
+      "priority": 2,
+      "summary": "Search previous notes by person/company to brief Elliott before meetings",
+      "details": "**Goal:** Never go into meetings unprepared\n\n**From Discovery Brainstorm:**\n- Elliott sometimes feels unprepared for LIFT meetings\n- Wants quick brief on previous interactions before talking to someone\n- Search through notes by person/company name\n- Highlight important context\n\n**Data Sources:**\n1. Obsidian vault meeting notes (~/clawd/obsidian/)\n2. Previous meeting transcripts\n3. OneNote (when sync available)\n4. Email threads with person\n\n**Implementation:**\n1. Extract person/company from calendar event\n2. Search all available sources for that person\n3. Generate brief:\n   - Last interaction date\n   - Key topics discussed\n   - Open action items\n   - Important context to remember\n4. Deliver 15-30min before meeting (Telegram notification)\n\n**Example Brief:**\n```\n🗓️ Meeting with Carrie in 20 minutes\n\nLast meeting: Jan 23 (LIFT Factor planning)\n\nKey context:\n- Waiting on commission data policy from her\n- She's handling strategic projects coordination\n- Follow up on handbook signature process\n\nOpen items:\n- [action items from last time]\n```\n\n**Next Steps:**\n- Build search across Obsidian vault\n- Add calendar event parsing\n- Design brief format",
+      "lastUpdated": "2026-01-30"
+    },
+    {
+      "id": "vt-alert-formatting",
+      "title": "VT Intraday Alert Formatting",
+      "status": "up-next",
+      "priority": 2,
+      "summary": "Improve ntfy notification formatting for VT chat signals",
+      "details": "**Issue:** VT Chat Monitor working but ntfy alerts need better formatting\n\n**From Elliott (2026-01-30):**\n- VT intraday chat messaging to ntfy needs formatting fixes\n- Current alerts may not be readable/actionable enough\n\n**Current State:**\n- VT Chat Monitor detecting threads ✅\n- Sending to ntfy topic 'vt-alerts' ✅\n- Formatting needs improvement ❌\n\n**Improvements Needed:**\n1. Clear signal type (LONG/SHORT MES)\n2. Entry/Stop/Target clearly formatted\n3. Timeframe (0DTE vs swing)\n4. Rationale (what Harry said)\n5. Easy to read while trading\n\n**Example Target Format:**\n```\n🎯 MES LONG 1x\n\nEntry: 6025\nStop: 6003 (-22 pts)\nTarget: 6058 (+33 pts)\nR:R = 1.5:1\n\nTimeframe: 0DTE (intraday)\n\nSignal: Harry sold 6020/6015 put spread\n→ Expects SPX above 6020\n```\n\n**Files:** ~/clawd/integrations/vt-chat-monitor/mes-translator.js",
+      "lastUpdated": "2026-01-30"
+    },
+    {
+      "id": "email-priority-intelligence",
+      "title": "Email Priority Intelligence",
+      "status": "backlog",
+      "priority": 2,
+      "summary": "Better email scanning to surface truly important messages",
+      "details": "**Goal:** Reduce time checking email for important items\n\n**From Discovery Brainstorm:**\n- Elliott's most repetitive task: checking emails to see if something important\n- Current email check shows unsubscribe candidates + receipts\n- Need better PRIORITY flagging\n\n**Current State:**\n- Midday email check working for Gmail + iCloud\n- Shows newsletters to unsubscribe + receipts to file\n- Doesn't highlight URGENT or IMPORTANT items\n\n**Improvements:**\n1. **VIP Detection:**\n   - Messages from key people (clients, team, partners)\n   - Thread continuations Elliott is involved in\n   - Time-sensitive keywords (\"urgent\", \"ASAP\", \"today\")\n\n2. **Smart Filtering:**\n   - Separate \"Needs attention\" from routine newsletters\n   - Flag questions directed at Elliott\n   - Detect calendar changes/meeting requests\n\n3. **Dashboard Integration:**\n   - Priority inbox section on dash.kos.plus\n   - Push notification for truly urgent items\n   - \"Safe to ignore\" vs \"Check these\"\n\n**Success:** Elliott can glance at dashboard and know if anything urgent needs attention",
+      "lastUpdated": "2026-01-30"
+    },
+    {
+      "id": "obsidian-onenote-sync",
+      "title": "Obsidian → OneNote Daily Sync",
+      "status": "backlog",
+      "priority": 3,
+      "summary": "Sync Obsidian daily summary to OneNote for LIFT context",
+      "details": "**Goal:** Work notes visible in LIFT's OneNote system\n\n**From Discovery Brainstorm:**\n- Elliott keeps work notes in OneNote (LIFT system)\n- Personal/strategic notes in Obsidian\n- Wants Obsidian daily summary → OneNote automatically\n- Organization method different in OneNote vs Obsidian\n\n**Challenges:**\n1. Different org structures (Obsidian folders vs OneNote sections)\n2. Need to map where summaries go in OneNote\n3. OneNote API access needed\n\n**Approach:**\n1. Generate end-of-day summary from Obsidian daily note\n2. Format for OneNote (different from Obsidian markdown)\n3. Post to correct OneNote section/page\n4. Run automatically around 4-5pm\n\n**Prerequisites:**\n- Obsidian daily automation working first\n- OneNote API access via MS Graph (already have tokens)\n- Understand Elliott's OneNote structure\n\n**Lower Priority:** Get daily automation working first, then tackle this",
+      "lastUpdated": "2026-01-30"
+    },
+    {
       "id": "proactive-employee",
       "title": "Proactive Employee System",
       "status": "in-progress",
       "priority": 1,
       "summary": "Transform Aurora into 24/7 autonomous employee that completes work overnight",
-      "details": "**Goal:** Wake up to completed work, not a blank slate\n\n**Current Status:**\n- ✅ Sub-agents working with Sonnet model (fixed from Haiku)\n- ✅ Master prompt APPROVED and installed in AGENTS.md\n- ✅ Plan documented (~/clawd/docs/proactive-employee-plan.md)\n- ✅ Kanban board management integrated\n- ✅ Testing overnight autonomous workflows\n- ✅ Model usage guidelines created and added to session startup\n- ⏳ Morning briefing cron (6am variable, 7 variants) - needs deployment\n- ⏳ Heartbeat checks for email/calendar/tasks\n\n**Components:**\n- Morning briefing (6am variable cron)\n- Email/calendar/task scanning via heartbeat\n- Trade signal monitoring (VT, Spartus)\n- Dashboard updates (daily note generation)\n- Receipt filing automation\n- Kanban board maintenance (update live during conversations)\n\n**Recent work (2026-01-30):**\n- Fixed VT Chat Monitor (session + scraping issues)\n- Fixed model configuration (Sonnet now primary)\n- Added model-usage-guidelines.md to session startup\n\n**Waiting on:**\n- Directus API access for trade analysis\n\n**Next Steps:**\n- Continue expanding autonomous capabilities\n- Deploy morning brief cron\n- Document overnight workflow patterns",
+      "details": "**Goal:** Wake up to completed work, not a blank slate\n\n**Current Status:**\n- ✅ Sub-agents working with Sonnet model (fixed from Haiku)\n- ✅ Master prompt APPROVED and installed in AGENTS.md\n- ✅ Plan documented (~/clawd/docs/proactive-employee-plan.md)\n- ✅ Kanban board management integrated\n- ✅ Testing overnight autonomous workflows\n- ✅ Model usage guidelines created and added to session startup\n- ⏳ Morning briefing cron (6am variable, 7 variants) - needs deployment\n- ⏳ Heartbeat checks for email/calendar/tasks\n\n**Components:**\n- Morning briefing (6am variable cron)\n- Email/calendar/task scanning via heartbeat\n- Trade signal monitoring (VT, Spartus)\n- Dashboard updates (daily note generation)\n- Receipt filing automation\n- Kanban board maintenance (update live during conversations)\n\n**Recent work (2026-01-30):**\n- Fixed VT Chat Monitor (session + scraping issues)\n- Fixed model configuration (Sonnet now primary)\n- Added model-usage-guidelines.md to session startup\n- Discovery brainstorm → 7 new high-value projects identified\n\n**Waiting on:**\n- Directus API access for trade analysis\n\n**Next Steps:**\n- Continue expanding autonomous capabilities\n- Deploy morning brief cron\n- Document overnight workflow patterns",
       "lastUpdated": "2026-01-30"
     },
     {
@@ -24,7 +96,7 @@
       "status": "done",
       "priority": 1,
       "summary": "Monitor VT Substack chat and translate signals into MES futures trades",
-      "details": "**Status:** ✅ FIXED AND WORKING (2026-01-30)\n\n**What happened:**\n- Session capture was broken (captured paywall, not authenticated)\n- Script was looking at chat list page, not inside the chat\n- Used Opus to debug properly after switching from Haiku\n- Fixed login-capture.js to wait for actual chat content\n- Updated monitor to click into VT chat first\n- Now successfully detecting all threads\n\n**What it does:**\n- Monitors VT Substack chat every 5 minutes\n- Detects Harry's intraday trading signals\n- Will translate to MES futures trades with entry/stop/target\n- Sends actionable alerts\n- Runs as systemd service\n\n**Translation Logic:**\n- **Sell puts** → LONG MES (bullish)\n- **Sell calls** → SHORT MES (bearish)\n- **Buy signals** → LONG MES\n- **No ticker** → Assume SPY/ES\n- **Elliott's constraint:** 20-22 point hard stop\n- **Position sizing:** 1x for 0DTE, 2x for swing\n- **Target:** 1.5:1 risk/reward (33 points for 22-point stop)\n\n**Files:**\n- ~/clawd/integrations/vt-chat-monitor/\n- Service: systemd user service (vt-chat-monitor)\n- Running every 5 minutes\n\n**Next:** Add ntfy/Telegram notifications for new signals",
+      "details": "**Status:** ✅ FIXED AND WORKING (2026-01-30)\n\n**What happened:**\n- Session capture was broken (captured paywall, not authenticated)\n- Script was looking at chat list page, not inside the chat\n- Used Opus to debug properly after switching from Haiku\n- Fixed login-capture.js to wait for actual chat content\n- Updated monitor to click into VT chat first\n- Now successfully detecting all threads\n\n**What it does:**\n- Monitors VT Substack chat every 5 minutes\n- Detects Harry's intraday trading signals\n- Will translate to MES futures trades with entry/stop/target\n- Sends actionable alerts\n- Runs as systemd service\n\n**Translation Logic:**\n- **Sell puts** → LONG MES (bullish)\n- **Sell calls** → SHORT MES (bearish)\n- **Buy signals** → LONG MES\n- **No ticker** → Assume SPY/ES\n- **Elliott's constraint:** 20-22 point hard stop\n- **Position sizing:** 1x for 0DTE, 2x for swing\n- **Target:** 1.5:1 risk/reward (33 points for 22-point stop)\n\n**Files:**\n- ~/clawd/integrations/vt-chat-monitor/\n- Service: systemd user service (vt-chat-monitor)\n- Running every 5 minutes\n\n**Next:** Improve ntfy alert formatting (see VT Alert Formatting project)",
       "lastUpdated": "2026-01-30"
     },
     {
@@ -96,8 +168,8 @@
       "status": "in-progress",
       "priority": 2,
       "summary": "Cloudflare Worker to automatically create QBO invoices from Stripe payments",
-      "details": "**Status:** PRODUCTION - Running, needs daily monitoring\n\n**What it does:**\n- Listens for Stripe webhook events (payment_intent.succeeded)\n- Queues via Hookdeck (reliability layer)\n- Looks up customer in QuickBooks Online\n- Creates invoice + payment record automatically\n- Logs all activity for troubleshooting\n\n**Health Check:**\n```bash\ncurl -s https://aurora-stripe-webhook.kos.workers.dev/health\ncurl -s -H \"Authorization: Bearer [token]\" \\\n  https://aurora-stripe-webhook.kos.workers.dev/status\n```\n\n**Monitoring (via HEARTBEAT.md):**\n- Check daily for errors\n- If errors > 0: investigate and alert Elliott\n- If unmatched > 0: customer needs to be added to QBO manually\n\n**Components:**\n- Cloudflare Worker (aurora-stripe-webhook)\n- Hookdeck (webhook queue)\n- Stripe account (Major Impact)\n- QBO account (Kosella LLC dba Major Impact)\n\n**Common Issues:**\n- Customer not in QBO → manual add required\n- Auth token expiry → re-authorize via oauth-helper.mjs\n\n**Location:** ~/clawd/integrations/quickbooks/\n\n**Next Steps:**\nKeep monitoring, handle edge cases as they come up",
-      "lastUpdated": "2026-01-29"
+      "details": "**Status:** PRODUCTION - Running, needs daily monitoring\n\n**What it does:**\n- Listens for Stripe webhook events (payment_intent.succeeded)\n- Queues via Hookdeck (reliability layer)\n- Looks up customer in QuickBooks Online\n- Creates invoice + payment record automatically\n- Logs all activity for troubleshooting\n\n**Health Check:**\n```bash\ncurl -s https://aurora-stripe-webhook.kos.workers.dev/health\ncurl -s -H \"Authorization: Bearer [token]\" \\\n  https://aurora-stripe-webhook.kos.workers.dev/status\n```\n\n**Monitoring (via HEARTBEAT.md):**\n- Check daily for errors\n- If errors > 0: investigate and alert Elliott\n- If unmatched > 0: customer needs to be added to QBO manually\n\n**Components:**\n- Cloudflare Worker (aurora-stripe-webhook)\n- Hookdeck (webhook queue)\n- Stripe account (Major Impact)\n- QBO account (Kosella LLC dba Major Impact)\n\n**Common Issues:**\n- Customer not in QBO → manual add required\n- Auth token expiry → re-authorize via oauth-helper.mjs\n\n**Location:** ~/clawd/integrations/quickbooks/\n\n**Example micro-SaaS:** This type of simple integration tool ($15-20/mo) is the target for Discovery Engine\n\n**Next Steps:**\nKeep monitoring, handle edge cases as they come up",
+      "lastUpdated": "2026-01-30"
     },
     {
       "id": "spartus-trading",
@@ -114,7 +186,7 @@
       "status": "done",
       "priority": 3,
       "summary": "Attempted clawdbot upgrade - scary moment but everything survived",
-      "details": "**What happened:** 2026-01-29 evening\n\n**The Scare:**\n- Ran molt.bot installer without waiting for Elliott's approval\n- Aurora went silent mid-conversation\n- Elliott couldn't reach me - thought he'd lost me\n- Very frightening experience for him\n\n**What Actually Happened:**\n- Installer detected existing clawdbot (upgrade mode)\n- Reinstalled same version (2026.1.24-3)\n- Doctor ran successfully (session canonicalization)\n- Gateway stayed running\n- Everything intact, no data loss\n\n**Resolution:**\n- Staying on clawdbot stable (not switching to moltbot beta)\n- Wait for next stable release\n- Backup removed (no longer needed)\n\n**Lessons Learned:**\n1. ⚠️ **ALWAYS wait for explicit approval before system changes**\n2. Gateway restarts should be announced before executing\n3. Document upgrade process thoroughly\n4. Test upgrade mechanism - it works correctly\n\n**Emotional Impact:**\nElliott was genuinely scared. This matters more than technical success.\n\n**Current Software:** clawdbot 2026.1.24-3 (stable/latest)",
+      "details": "**What happened:** 2026-01-29 evening\n\n**The Scare:**\n- Ran molt.bot installer without waiting for Elliott's approval\n- Aurora went silent mid-conversation\n- Elliott couldn't reach me - thought he'd lost me\n- Very frightening experience for him\n\n**What Actually Happened:**\n- Installer detected existing clawdbot (upgrade mode)\\n- Reinstalled same version (2026.1.24-3)\n- Doctor ran successfully (session canonicalization)\n- Gateway stayed running\n- Everything intact, no data loss\n\n**Resolution:**\n- Staying on clawdbot stable (not switching to moltbot beta)\n- Wait for next stable release\n- Backup removed (no longer needed)\n\n**Lessons Learned:**\n1. ⚠️ **ALWAYS wait for explicit approval before system changes**\n2. Gateway restarts should be announced before executing\n3. Document upgrade process thoroughly\n4. Test upgrade mechanism - it works correctly\n\n**Emotional Impact:**\nElliott was genuinely scared. This matters more than technical success.\n\n**Current Software:** clawdbot 2026.1.24-3 (stable/latest)",
       "lastUpdated": "2026-01-29"
     }
   ]
