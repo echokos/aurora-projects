@@ -370,15 +370,11 @@
         },
         
         async saveProjects() {
-          // In a real app, this would POST to an API
-          // For now, just log the updated data
+          // Silent update - changes are client-side only
+          // Aurora will commit manually when asked
           console.log('Projects updated:', {
             projects: this.projects
           });
-          
-          // You could implement an API endpoint to save this
-          // For MVP, changes are client-side only until manual update
-          alert('Project moved! Note: Auto-save not yet implemented - Aurora will commit changes manually.');
         },
         
         async loadProjects() {
