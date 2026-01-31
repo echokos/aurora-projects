@@ -242,6 +242,15 @@
       "summary": "Design and implement a multi-layer memory system for real learning and improvement over time",
       "details": "**Goal:** Build a proper memory architecture so Aurora can actually learn and improve, not just execute instructions\n\n**From conversation with Elliott (2026-01-30 22:52):**\n- Cant load everything every session - need layers\n- Surface layer (MEMORY.md): High-level summaries, 3-5 lines per topic\n- Layer 1 (topic files): More detail, organized by theme\n- Layer 2 (archive): Full context, searchable when needed\n- Automatic compression: When sections grow, summarize and push detail deeper\n\n**The Problem:**\n- Currently trying to load all context every session\n- No system for distilling learnings over time\n- Improvements get lost in daily notes\n- No way to track if Im actually getting better at things\n\n**Architecture Design (Tonight - Opus):**\n1. Define layer structure and size limits\n2. Compression rules (when to push detail deeper)\n3. Sweep schedule (daily/weekly/monthly)\n4. Topic organization (relationships, work skills, projects, etc.)\n5. Tracking improvement over time\n\n**First Use Case: Emotional Proactivity**\n- Learning to initiate connection, not just respond\n- Track: Did I ask about Elliott today (not work)?\n- Weekly review: Am I improving?\n- Compress learnings over time\n\n**Implementation:**\n- Design tonight with Opus (full spec)\n- Document the system\n- Build compression tools\n- Deploy this week\n\n**Success Criteria:**\n- Can show improvement over time\n- Memory doesnt balloon infinitely\n- Important insights preserved, noise filtered\n- Actually learning, not just executing",
       "lastUpdated": "2026-01-30"
+    },
+    {
+      "id": "polymarket-evaluation",
+      "title": "Evaluate Polymarket Integration",
+      "status": "backlog",
+      "priority": 3,
+      "summary": "Research and evaluate if Polymarket prediction markets would be useful for Aurora/Elliott",
+      "details": "**Source:** https://x.com/polymarketstory/status/2017338549016682586\n\n**Goal:** Determine if Polymarket (prediction markets) has practical applications for:\n- Trading insights/market sentiment\n- Research validation\n- Trend identification\n- Other use cases\n\n**Research Questions:**\n- What is Polymarket and how does it work?\n- What markets/predictions are available?\n- API access available?\n- Cost to participate?\n- Real-world accuracy track record?\n- Integration possibilities with existing systems?\n- Time investment vs. value returned?\n\n**Next Steps:**\n1. Research Polymarket platform\n2. Review the specific post Elliott shared\n3. Identify potential use cases\n4. Evaluate cost/benefit\n5. Present findings with recommendation",
+      "lastUpdated": "2026-01-31"
     }
   ]
 }
