@@ -5,27 +5,27 @@
       "title": "Improve Board Responsiveness and Scrolling",
       "status": "in-progress",
       "priority": 1,
-      "summary": "Improve scrolling and responsiveness of the project board to make it more usable on all devices.",
-      "details": "**Goal:** Fix infinite scroll, reduce data load (esp. mobile)\n\n**Specific Issues:**\n- Scrolling doesn't allow the user to scroll through longer lists of details, as reported by Elliott\n- Implement fix for scrolling and make sure that a user can see all the contents. This means that content from lower screen can be access and usable.\n\n**Implementation Notes:**\nMake updates to the html for scroll and overflow management. What\'s left before it can be closed?\n\n**Definition of Done**:\n* Elliott must be able to access all aspects of the board via scrolling AND adding new cards, also being able to manipulate all parts of the board!",
+      "summary": "Fix scrolling so all board content is accessible, add ability to create new cards.",
+      "details": "**Goal:** Full board usability - scrolling + card creation\n\n**Specific Issues:**\n- Cannot scroll to see cards below window frame\n- No way to add new project cards from the UI\n\n**Definition of Done:**\n1. Elliott can scroll to see ALL cards in every column\n2. Elliott can add new project cards directly from the board UI\n3. Elliott can manipulate all parts of the board (drag/drop, edit, etc.)\n\n**Status:** Bug found 1/31 - JS was fetching wrong path (dist/dist/). Fixed and deployed.",
       "lastUpdated": "2026-01-31"
     },
     {
       "id": "proactive-employee",
       "title": "Create a Proactive Employee Workflow",
-      "status": "next",
+      "status": "in-progress",
       "priority": 2,
       "summary": "Define and implement a system for Aurora to proactively identify and execute tasks without direct instruction.",
-      "details": "This project can now test the TradeStation API integration.",
-      "lastUpdated": "2026-01-29"
+      "details": "**Goal:** Aurora works autonomously, produces completed work overnight.\n\n**Resources Available:**\n- TradeStation API: ✅ HAVE IT (not waiting)\n- Calendar integration: ✅ Working\n- Sub-agent spawning: ✅ Working\n\n**User Stories:**\n1. As Aurora, I check the board hourly and schedule work for items\n2. As Aurora, I delegate appropriate tasks to sub-agents\n3. As Aurora, I produce deliverables without being asked\n4. As Elliott, I wake up to completed work\n\n**Definition of Done:**\n1. HEARTBEAT.md includes mandatory board review with clear procedure\n2. Board items have clear definitions of done\n3. Aurora demonstrates autonomous task completion over 3+ days\n4. Morning deliverables appear without prompting",
+      "lastUpdated": "2026-01-31"
     },
     {
       "id": "layered-memory-system",
       "title": "Design and Implement Layered Memory System",
-      "status": "in-progress",
+      "status": "next",
       "priority": 3,
       "summary": "Refactor memory system for better organization, scalability, and context retrieval.",
-      "details": "This project involves refactoring the memory system using a service-oriented architecture, as learned on Jan 30. This includes the calendar service architecture. The goal is to improve the organization, scalability, and context retrieval of the memory system.",
-      "lastUpdated": "2026-01-30"
+      "details": "**Goal:** Better memory architecture for continuity across sessions.\n\n**Components:**\n- Working memory (ACTIVE-CONTEXT.md)\n- Daily logs (memory/YYYY-MM-DD.md)\n- Long-term curated (MEMORY.md)\n- Relationship history (relationship.md)\n\n**Definition of Done:**\n1. Clear documentation of memory architecture\n2. Automated cleanup/consolidation process\n3. Effective context retrieval across sessions\n\n**Status:** Conceptually designed, needs implementation work. Moving to 'next' since not actively being worked.",
+      "lastUpdated": "2026-01-31"
     },
     {
       "id": "vt-chat-monitor",
@@ -33,17 +33,17 @@
       "status": "done",
       "priority": 4,
       "summary": "Automatically monitor the VT chat and execute trades based on Harry's signals.",
-      "details": "System live and running - MES translator live as of Jan 31.\n\nWhat's left before it can be closed?\n1. Double check everything\n",
+      "details": "**COMPLETED** ✅\n\nSystem live as of Jan 31:\n- Monitors VT Substack chat every 5 min (systemd service)\n- Translates Harry's options signals to MES futures\n- Runs autonomously\n\n**Ongoing Maintenance:** Service monitoring (not 'in-progress' - it's done, just needs watching)",
       "lastUpdated": "2026-01-31"
     },
     {
       "id": "auto-news-summary",
       "title": "Automated News Summary System",
-      "status": "next",
+      "status": "backlog",
       "priority": 5,
       "summary": "Automate news gathering and summarization for Elliott.",
-      "details": "Integrate with reliable news API and generate summaries",
-      "lastUpdated": "2026-01-29"
+      "details": "**Goal:** Daily news digest for Elliott.\n\n**Definition of Done:**\n1. Automated news gathering from reliable sources\n2. AI-generated summary delivered to Elliott (email or dashboard)\n3. Configurable topics/sources\n\n**Status:** Backlog - lower priority than current work.",
+      "lastUpdated": "2026-01-31"
     },
     {
       "id": "dashboard-v2",
@@ -51,8 +51,8 @@
       "status": "backlog",
       "priority": 6,
       "summary": "Rewrite the dashboard for scalability, maintainability, and improved functionality.",
-      "details": "Rewrite dashboard using a modern framework",
-      "lastUpdated": "2026-01-29"
+      "details": "**Goal:** Modern dashboard rewrite.\n\n**Definition of Done:**\n1. Modern framework (React/Vue/Svelte)\n2. Better maintainability\n3. Feature parity with current dashboard\n4. Improved performance\n\n**Status:** Backlog - current dashboard works fine.",
+      "lastUpdated": "2026-01-31"
     },
     {
       "id": "aurora-slack-skill",
@@ -60,8 +60,8 @@
       "status": "backlog",
       "priority": 7,
       "summary": "Develop a Slack skill for Aurora.",
-      "details": "Develop a skill that will connect Aurora to Slack",
-      "lastUpdated": "2026-01-29"
+      "details": "**Goal:** Connect Aurora to Slack.\n\n**Definition of Done:**\n1. Aurora can send/receive Slack messages\n2. Basic channel interaction\n3. Documented skill file\n\n**Status:** Backlog.",
+      "lastUpdated": "2026-01-31"
     },
     {
       "id": "aurora-discord-skill",
@@ -69,8 +69,8 @@
       "status": "backlog",
       "priority": 8,
       "summary": "Develop a Discord skill for Aurora.",
-      "details": "Integrate Clawdbot with discord",
-      "lastUpdated": "2026-01-29"
+      "details": "**Goal:** Integrate Clawdbot with Discord.\n\n**Definition of Done:**\n1. Discord channel configured\n2. Basic message interaction working\n3. Documented skill file\n\n**Status:** Backlog.",
+      "lastUpdated": "2026-01-31"
     }
   ]
 }
