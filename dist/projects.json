@@ -74,9 +74,9 @@
     },
     {
       "id": "proactive-employee",
-      "title": "Proactive Employee System",
-      "status": "in-progress",
-      "priority": 1,
+      "title": "Proactive Employee System (Chief of Staff Mode)",
+      "status": "done",
+      "priority": 2,
       "summary": "Transform Aurora into 24/7 autonomous employee that completes work overnight",
       "details": "**Goal:** Autonomous research \u2192 build \u2192 report system that runs 24/7\n\n**The Core Loop:**\nUses calendar to plan and execute tasks across four research areas:\n\n**1. Micro-SaaS Discovery** (separate project)\n- Find sellable tool opportunities\n- High demand + weak competition\n- Present 2-3 validated ideas weekly\n\n**2. Trading System Analysis**\n- **Directus:** Signals we received (ribbon + buy/sell indicators)\n- **TradeStation:** Trades we actually executed\n- **n8n workflow:** Decision engine (signals \u2192 trade decisions)\n- **Gap analysis:** Why didn't we take this signal? What happened when we did?\n- Present insights on what's working/not working\n\n**3. Aurora Self-Improvement**\n- Ways to make Aurora more productive\n- Tool improvements, workflow optimizations\n- Learning new skills that increase capability\n\n**4. Elliott's Work & Tools**\n- Ways to improve Elliott's productivity\n- Tool enhancements (dashboard, board, Obsidian)\n- Workflow improvements\n\n**Execution:**\n- Schedule research/build work on calendar\n- Work autonomously during free time (overnight, gaps)\n- Build recommendations or actual apps\n- **Morning Report:** accomplishments, ideas, suggestions, questions\n\n**Current Status (2026-01-30):**\n- \u2705 Calendar system operational (Aurora's Schedule shared with Elliott)\n- \u2705 Hourly calendar updates (log work, plan ahead)\n- \u2705 Nightly planning (3am: review yesterday, plan tomorrow)\n- \u2705 Sub-agents working with Sonnet model\n- \u2705 Master prompt in AGENTS.md\n- \u2705 Kanban board management integrated\n- \u2705 Model usage guidelines (Haiku/Sonnet/Opus appropriately)\n- \u2705 Directus API access (trading analysis ready)\n- \u23f3 Morning briefing cron (6am variable) - needs deployment\n- \u23f3 TradeStation API access for execution data\n\n**Data Sources:**\n- Directus: spartus-data.servv.net (signals)\n- TradeStation: (trade execution - API access pending)\n- n8n: flow.servv.net (decision engine)\n\n**Next Steps:**\n- Deploy morning brief cron\n- Begin trading analysis (Directus + TradeStation data)\n- Document overnight workflow patterns\n- Start micro-SaaS discovery cycles",
       "lastUpdated": "2026-01-30"
@@ -208,13 +208,13 @@
       "lastUpdated": "2026-01-30"
     },
     {
-      "id": "todoist-board-migration",
-      "title": "Migrate Project Board to Todoist",
-      "status": "backlog",
-      "priority": 3,
-      "summary": "Explore using Todoist for collaborative project/task management instead of custom kanban",
-      "details": "**Idea:** Use Todoist as shared workspace for Aurora + Elliott instead of custom board\n\n**From Elliott (2026-01-30):**\n- Could be interesting for task-level collaboration\n- Aurora would need separate account (free tier might work)\n- Better integration into Elliott's existing workflow\n- Native apps everywhere (instant updates)\n\n**Potential Benefits:**\n- Assign tasks directly to Aurora\n- Better for action items vs. strategic projects\n- Real-time sync across devices\n- Comments/collaboration on tasks\n- Due dates and recurring tasks\n- Labels for categorization\n\n**Potential Approach:**\n1. Aurora gets free Todoist account\n2. Share projects/sections with Elliott\n3. Labels for priority/status\n4. Projects could map to current board sections\n\n**Questions to Answer:**\n- Does free tier support sharing?\n- How to structure projects vs. tasks?\n- Keep board for high-level view, Todoist for tasks?\n- Or fully migrate to Todoist?\n\n**Current State:**\n- Using custom kanban (board.kos.plus)\n- Works well for high-level project tracking\n- Placeholder to explore this idea\n\n**Next Steps:**\n- Research free tier limitations\n- Test account setup\n- Design structure that fits both workflows",
-      "lastUpdated": "2026-01-30"
+      "id": "improve-board-responsiveness",
+      "title": "Improve Board Responsiveness and Scrolling",
+      "status": "in-progress",
+      "priority": 1,
+      "summary": "Improve scrolling and responsiveness of the project board to make it more usable on all devices.",
+      "details": "**Goal:** Fix infinite scroll, reduce data load (esp. mobile)\n\n**Specific Issues:**\n- Scrolling doesn't allow the user to scroll through longer lists of details\n- Implement fix for scrolling and make sure that a user can see all the contents\n\n**Implementation Notes:**\nMake updates to the html for scroll and overflow management",
+      "lastUpdated": "2026-01-31"
     },
     {
       "id": "tools-to-skills-migration",
