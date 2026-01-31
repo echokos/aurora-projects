@@ -6,7 +6,7 @@
       "status": "in-progress",
       "priority": 1,
       "summary": "Improve scrolling and responsiveness of the project board to make it more usable on all devices.",
-      "details": "**Goal:** Fix infinite scroll, reduce data load (esp. mobile)\n\n**Specific Issues:**\n- Scrolling doesn't allow the user to scroll through longer lists of details, as reported by Elliott\n- Implement fix for scrolling and make sure that a user can see all the contents. This means that content from lower screen can be access and usable.\n\n**Implementation Notes:**\nMake updates to the html for scroll and overflow management. What\'s left before it can be closed?\n\n**Definition of Done**:\n* Elliott must be able to access all aspects of board via scrolling, also being able to manipulate all parts of the board!",
+      "details": "**Goal:** Fix infinite scroll, reduce data load (esp. mobile)\n\n**Specific Issues:**\n- Scrolling doesn't allow the user to scroll through longer lists of details, as reported by Elliott\n- Implement fix for scrolling and make sure that a user can see all the contents. This means that content from lower screen can be access and usable.\n\n**Implementation Notes:**\nMake updates to the html for scroll and overflow management. What\'s left before it can be closed?\n\n**Definition of Done**:\n* Elliott must be able to access all aspects of the board via scrolling AND adding new cards, also being able to manipulate all parts of the board!",
       "lastUpdated": "2026-01-31"
     },
     {
@@ -15,7 +15,7 @@
       "status": "next",
       "priority": 2,
       "summary": "Define and implement a system for Aurora to proactively identify and execute tasks without direct instruction.",
-      "details": "This project is awaiting project details, to test API info at a later step",
+      "details": "This project can now test the TradeStation API integration.",
       "lastUpdated": "2026-01-29"
     },
     {
@@ -24,7 +24,7 @@
       "status": "in-progress",
       "priority": 3,
       "summary": "Refactor memory system for better organization, scalability, and context retrieval.",
-      "details": "Details match current notes and conversations?",
+      "details": "This project involves refactoring the memory system using a service-oriented architecture, as learned on Jan 30. This includes the calendar service architecture. The goal is to improve the organization, scalability, and context retrieval of the memory system.",
       "lastUpdated": "2026-01-30"
     },
     {
