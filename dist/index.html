@@ -58,6 +58,14 @@
     /* Smooth height transitions */
     .kanban-column {
       min-height: 200px;
+      max-height: calc(100vh - 250px);
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .kanban-column > div {
+      overflow-y: auto;
+      flex: 1;
     }
     
     /* Drag-and-drop styles */
